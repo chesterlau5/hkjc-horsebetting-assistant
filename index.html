@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HKJC AI Betting Powerhouse</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen font-sans tracking-tight">
 
-  <div class="max-w-6xl mx-auto p-4 lg:p-8">
+  <div class="max-w-7xl mx-auto p-4 lg:p-8">
     <header class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-800 pb-6 gap-4">
       <div>
-        <span class="bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-          v2.0 Quant Analytics Enabled
+        <span class="bg-red-500/10 text-red-500 border border-red-500/20 text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider animate-pulse">
+          v3.0 Sportsbook Alpha Engine Active
         </span>
         <h1 class="text-4xl font-black mt-2 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500">
           HKJC RACING POWERHOUSE
@@ -61,18 +61,48 @@
         <p id="res-summary" class="text-gray-300 text-sm leading-relaxed"></p>
       </div>
 
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <div class="bg-gradient-to-b from-gray-900 to-gray-950 border border-emerald-900/40 rounded-2xl p-6 shadow-xl">
+          <div class="flex items-center justify-between mb-4 border-b border-gray-800 pb-3">
+            <h3 class="text-base font-black text-emerald-400 uppercase tracking-tight flex items-center gap-2">
+              <span class="flex h-3 w-3 rounded-full bg-emerald-500"></span>
+              Top 5 High-Stability Cash Plays
+            </h3>
+            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 font-bold px-2 py-0.5 rounded border border-emerald-500/20 uppercase">Low Risk</span>
+          </div>
+          <div id="guaranteed-container" class="space-y-3">
+            </div>
+        </div>
+
+        <div class="bg-gradient-to-b from-gray-900 to-gray-950 border border-purple-900/40 rounded-2xl p-6 shadow-xl">
+          <div class="flex items-center justify-between mb-4 border-b border-gray-800 pb-3">
+            <h3 class="text-base font-black text-purple-400 uppercase tracking-tight flex items-center gap-2">
+              <span class="flex h-3 w-3 rounded-full bg-purple-500"></span>
+              Top 5 High-Multiplier Upsets
+            </h3>
+            <span class="text-[10px] bg-purple-500/10 text-purple-400 font-bold px-2 py-0.5 rounded border border-purple-500/20 uppercase">High Yield</span>
+          </div>
+          <div id="upsets-container" class="space-y-3">
+            </div>
+        </div>
+
+      </div>
+
       <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden shadow-2xl">
-        <div class="p-6 border-b border-gray-800 bg-gray-900/50">
-          <h3 class="text-base font-bold text-white uppercase tracking-tight">Runner Field Analysis Matrice</h3>
+        <div class="p-6 border-b border-gray-800 bg-gray-900/50 flex justify-between items-center">
+          <h3 class="text-base font-bold text-white uppercase tracking-tight">Full Core Matrix Analyzer</h3>
+          <span class="text-xs text-gray-400 font-mono">Sorted by Implied Win Probability</span>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse">
             <thead>
               <tr class="border-b border-gray-800 text-[11px] font-bold text-gray-500 uppercase bg-gray-950">
                 <th class="py-4 px-4 text-center w-16">#</th>
-                <th class="py-4 px-4">Horse Identity</th>
+                <th class="py-4 px-4">Horse Identity & Diagnostics</th>
                 <th class="py-4 px-4 text-center">HKJC Dec</th>
-                <th class="py-4 px-4 text-center">Vegas Line</th>
+                <th class="py-4 px-4 text-center">Vegas Moneyline</th>
+                <th class="py-4 px-4 text-center">Odds Value Rating</th>
                 <th class="py-4 px-4">Implied Win Prob</th>
                 <th class="py-4 px-4 text-center">Quant Score</th>
                 <th class="py-4 px-4 text-center">Sentiment</th>
@@ -142,10 +172,58 @@
       document.getElementById('exotic-quinella').textContent = data.analysis.exoticBetSuggestions?.quinella || 'No clear values found.';
       document.getElementById('exotic-tierce').textContent = data.analysis.exoticBetSuggestions?.tierce || 'Data inconclusive.';
 
+      // RENDER PANEL 1: HIGH-STABILITY CASH PLAYS
+      const guaranteedContainer = document.getElementById('guaranteed-container');
+      guaranteedContainer.innerHTML = '';
+      const stablePlays = data.analysis.top5Guaranteed || [];
+      stablePlays.forEach(play => {
+        const div = document.createElement('div');
+        div.className = "bg-gray-950 border border-gray-800 rounded-xl p-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2";
+        div.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="bg-emerald-500/20 text-emerald-400 font-mono text-xs font-black px-1.5 py-0.5 rounded">#${play.horseNumber}</span>
+              <span class="font-extrabold text-sm text-white">${play.horseName}</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-1"><span class="text-emerald-500 font-semibold">Play:</span> ${play.recommendedBet}</p>
+            <p class="text-[11px] text-gray-500 mt-0.5">${play.executionStrategy}</p>
+          </div>
+          <div class="text-left sm:text-right flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto border-t border-gray-800 sm:border-0 pt-2 sm:pt-0">
+            <span class="text-xs font-mono font-bold text-gray-400">${play.vegasOdds}</span>
+            <span class="text-sm font-black text-emerald-400 font-mono">${play.winProbability}% Prob</span>
+          </div>
+        `;
+        guaranteedContainer.appendChild(div);
+      });
+
+      // RENDER PANEL 2: HIGH-MULTIPLIER UPSETS
+      const upsetsContainer = document.getElementById('upsets-container');
+      upsetsContainer.innerHTML = '';
+      const upsetPlays = data.analysis.top5Upsets || [];
+      upsetPlays.forEach(play => {
+        const div = document.createElement('div');
+        div.className = "bg-gray-950 border border-gray-800 rounded-xl p-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2";
+        div.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="bg-purple-500/20 text-purple-400 font-mono text-xs font-black px-1.5 py-0.5 rounded">#${play.horseNumber}</span>
+              <span class="font-extrabold text-sm text-white">${play.horseName}</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-1"><span class="text-purple-500 font-semibold">Play:</span> ${play.recommendedBet}</p>
+            <p class="text-[11px] text-gray-500 mt-0.5">${play.upsetTrigger}</p>
+          </div>
+          <div class="text-left sm:text-right flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto border-t border-gray-800 sm:border-0 pt-2 sm:pt-0">
+            <span class="text-xs font-mono font-bold text-orange-400 font-black">${play.vegasOdds}</span>
+            <span class="text-sm font-bold text-purple-400 font-mono">${play.winProbability}% Prob</span>
+          </div>
+        `;
+        upsetsContainer.appendChild(div);
+      });
+
+      // RENDER MAIN FIELD TABLE MATRIX
       const tbody = document.getElementById('runners-rows');
       tbody.innerHTML = '';
 
-      // Sort runners by implied win probability descending
       const runners = data.analysis.runners || [];
       runners.sort((a, b) => b.winProbability - a.winProbability);
 
@@ -158,20 +236,33 @@
         if (horse.expertSentiment === 'Bullish') sentimentClass = "bg-green-500/10 text-green-400 border border-green-500/20";
         if (horse.expertSentiment === 'Bearish') sentimentClass = "bg-red-500/10 text-red-400 border border-red-500/20";
 
+        // TRAFFIC-LIGHT ODDS VALUE INDICATOR
+        let valueBadgeClass = "bg-red-500/10 text-red-500 border border-red-500/20";
+        let valueLabel = "Bad Odds / Overpriced";
+        if (horse.oddsValue === 'Good') {
+          valueBadgeClass = "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+          valueLabel = "Good Odds / High Value";
+        }
+
         tr.innerHTML = `
           <td class="py-4 px-4 text-center font-mono font-bold text-gray-400 bg-gray-950/30">${horse.horseNumber}</td>
           <td class="py-4 px-4">
-            <div class="font-extrabold text-white text-sm">${horse.horseName}</div>
+            <div class="font-extrabold text-white text-base">${horse.horseName}</div>
             <div class="text-[11px] text-gray-400 mt-1"><span class="text-orange-400 font-semibold">Edge:</span> ${horse.keyEdge}</div>
             <div class="text-[11px] text-gray-500 mt-0.5"><span class="text-red-400 font-semibold">Risk:</span> ${horse.riskFactor}</div>
           </td>
           <td class="py-4 px-4 text-center font-mono text-sm font-bold text-yellow-500">${horse.hkjcOdds}</td>
-          <td class="py-4 px-4 text-center font-mono text-sm font-bold text-orange-400">${horse.vegasOdds}</td>
+          <td class="py-4 px-4 text-center font-mono text-base font-black text-orange-400">${horse.vegasOdds}</td>
+          <td class="py-4 px-4 text-center">
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${valueBadgeClass}">
+              ${valueLabel}
+            </span>
+          </td>
           <td class="py-4 px-4">
             <div class="flex items-center space-x-2">
-              <span class="text-xs font-mono font-bold text-gray-300 w-8">${horse.winProbability}%</span>
-              <div class="w-24 bg-gray-800 h-2 rounded-full overflow-hidden hidden sm:block">
-                <div class="bg-gradient-to-r from-orange-500 to-red-500 h-2" style="width: ${horse.winProbability}%"></div>
+              <span class="text-sm font-mono font-black text-white w-10">${horse.winProbability}%</span>
+              <div class="w-24 bg-gray-800 h-2.5 rounded-full overflow-hidden hidden sm:block">
+                <div class="bg-gradient-to-r from-orange-500 to-red-500 h-2.5" style="width: ${horse.winProbability}%"></div>
               </div>
             </div>
           </td>
