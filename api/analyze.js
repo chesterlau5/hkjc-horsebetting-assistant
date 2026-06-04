@@ -41,7 +41,13 @@ export default async function handler(req, res) {
       });
       
       const data = await response.json();
-      if (!response.ok) return res.status(500).json({ error: 'Failed to look up calendar.' });
+      
+      // FIX: Bubbles up Google's exact error message so the frontend shield can read it!
+      if (!response.ok) {
+        return res.status(response.status).json({ 
+          error: data.error?.message || 'Google live-search grounding engine timed out. Try again or switch to Manual Overdrive.' 
+        });
+      }
       
       let txt = data.candidates[0].content.parts[0].text;
       
@@ -154,7 +160,7 @@ export default async function handler(req, res) {
 
     const geminiData = await geminiResponse.json();
     if (!geminiResponse.ok) {
-      return res.status(500).json({ error: geminiData.error?.message || 'Gemini processing failed.' });
+      return res.status(geminiResponse.status).json({ error: geminiData.error?.message || 'Gemini processing failed.' });
     }
 
     let responseText = geminiData.candidates[0].content.parts[0].text;
