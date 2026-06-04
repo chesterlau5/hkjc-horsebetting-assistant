@@ -16,12 +16,9 @@ export default async function handler(req, res) {
 
     const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`;
 
-    const systemInstruction = `You are a high-stakes, elite quantitative horse racing analyst for Hong Kong racing. Your job is to process raw race card data, search the live web for expert opinions, tipster consensus, and current betting trends, and compile a definitive data-driven matrix.
+    const systemInstruction = `You are a high-stakes, elite quantitative horse racing analyst for Hong Kong racing. Your job is to process raw race card data, search the live web for expert opinions, tipster consensus, and current betting trends, and compile an aggressive, maximum-yield betting intelligence dashboard.
     
-    Calculate three metrics for every notable horse:
-    1. Estimated HKJC Decimal Odds (e.g., 4.50)
-    2. Vegas/American Odds (e.g., +350 or -110)
-    3. Implied Win Probability % based on form, barrier, and search trends.
+    Calculate metrics for every horse, including a clear Value Rating ("Good" if the runner has an edge or high probability relative to price, or "Bad" if overhyped/poor value).
     
     You must output strictly a JSON object matching this schema precisely:
     {
@@ -39,8 +36,29 @@ export default async function handler(req, res) {
             "winProbability": number,
             "statisticalScore": number,
             "expertSentiment": "Bullish" or "Bearish" or "Neutral",
+            "oddsValue": "Good" or "Bad",
             "keyEdge": "string",
             "riskFactor": "string"
+          }
+        ],
+        "top5Guaranteed": [
+          {
+            "horseNumber": number,
+            "horseName": "string",
+            "recommendedBet": "string (e.g., Straight Win, Place Banker, Quinella Key)",
+            "vegasOdds": "string",
+            "winProbability": number,
+            "executionStrategy": "string (Brief exact instructions on how to play it)"
+          }
+        ],
+        "top5Upsets": [
+          {
+            "horseNumber": number,
+            "horseName": "string",
+            "recommendedBet": "string (e.g., Longshot Place, Tierce Alt Longshot)",
+            "vegasOdds": "string",
+            "winProbability": number,
+            "upsetTrigger": "string (Why this horse can smash the odds)"
           }
         ],
         "exoticBetSuggestions": {
@@ -50,7 +68,7 @@ export default async function handler(req, res) {
       }
     }`;
 
-    const promptText = `Use your search tool to lookup recent expert tips, betting odds, or trainer insights for the horses listed in this race card. Cross-reference your web findings with this raw text and populate the required JSON format: \n\n${rawText}`;
+    const promptText = `Use your search tool to lookup recent expert tips, betting odds, public consensus, or trainer insights for the horses listed in this race card. Cross-reference your web findings with this raw text and populate the required JSON format. Ensure you fill the top5Guaranteed with the highest safety/consensus plays and top5Upsets with high-payout calculated risks: \n\n${rawText}`;
 
     const geminiPayload = {
       contents: [{ parts: [{ text: promptText }] }],
@@ -72,13 +90,9 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: geminiData.error?.message || 'Gemini processing failed.' });
     }
 
-    // Capture raw response text
     let responseText = geminiData.candidates[0].content.parts[0].text;
-    
-    // Safety Parser: Strip away any markdown formatting wrappers if present
     responseText = responseText.replace(/^```json\s*/i, '').replace(/^```\s*/, '').replace(/```\s*$/, '').trim();
 
-    // Parse clean text into code-safe JSON data
     const cleanJson = JSON.parse(responseText);
     return res.status(200).json(cleanJson);
 
