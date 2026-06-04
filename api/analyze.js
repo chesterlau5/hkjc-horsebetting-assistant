@@ -55,9 +55,8 @@ export default async function handler(req, res) {
     const geminiPayload = {
       contents: [{ parts: [{ text: promptText }] }],
       systemInstruction: { parts: [{ text: systemInstruction }] },
-      tools: [{ googleSearch: {} }], // Activates live web crawling
+      tools: [{ googleSearch: {} }], 
       generationConfig: {
-        responseMimeType: "application/json",
         temperature: 0.2
       }
     };
@@ -73,7 +72,14 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: geminiData.error?.message || 'Gemini processing failed.' });
     }
 
-    const cleanJson = JSON.parse(geminiData.candidates[0].content.parts[0].text);
+    // Capture raw response text
+    let responseText = geminiData.candidates[0].content.parts[0].text;
+    
+    // Safety Parser: Strip away any markdown formatting wrappers if present
+    responseText = responseText.replace(/^```json\s*/i, '').replace(/^```\s*/, '').replace(/```\s*$/, '').trim();
+
+    // Parse clean text into code-safe JSON data
+    const cleanJson = JSON.parse(responseText);
     return res.status(200).json(cleanJson);
 
   } catch (error) {
