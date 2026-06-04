@@ -22,7 +22,7 @@
         <div class="flex items-center gap-2">
           <span class="inline-flex items-center gap-1 bg-lime-500/10 text-lime-400 border border-lime-500/20 text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider">
             <span class="h-1.5 w-1.5 rounded-full bg-lime-500"></span>
-            AUTOMATED DATELINE MATRIX v5.4
+            DUAL-MODE ROUTING ENGINE v5.6
           </span>
         </div>
         <h1 class="text-2xl font-black tracking-tight mt-1 text-white uppercase">
@@ -31,11 +31,20 @@
       </div>
       <div class="text-left sm:text-right font-mono text-[10px] text-zinc-600 space-y-0.5">
         <p>SYSTEM INFERENCE // GEMINI.FLASH</p>
-        <p>CONTROL MODE // DEFENSIVE ALIAS RECOVERY ENGAGED</p>
+        <p>REDUNDANCY TARGET // RATE LIMIT COOLDOWN SHIELD ACTIVE</p>
       </div>
     </header>
 
-    <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 space-y-4">
+    <div class="flex border-b border-zinc-900 gap-2">
+      <button id="tab-auto" class="px-4 py-2 text-xs font-black uppercase tracking-wider border-b-2 border-lime-500 text-lime-400 bg-zinc-950/40 rounded-t transition-all">
+        Live Auto-Pilot (Date Select)
+      </button>
+      <button id="tab-manual" class="px-4 py-2 text-xs font-black uppercase tracking-wider border-b-2 border-transparent text-zinc-500 hover:text-zinc-300 transition-all">
+        Manual Overdrive (Instant Paste)
+      </button>
+    </div>
+
+    <div id="panel-auto" class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 space-y-4">
       <div class="flex flex-col sm:flex-row items-end gap-3">
         <div class="flex-1 w-full">
           <label class="text-[10px] font-black text-zinc-500 uppercase tracking-wider block mb-1.5">Select Targeted Race Date</label>
@@ -49,8 +58,31 @@
 
       <div id="schedule-container" class="hidden border-t border-zinc-900 pt-3 space-y-2">
         <span class="text-[9px] font-black text-zinc-600 uppercase tracking-wider block">Scheduled Race Meetings Grid:</span>
-        <div id="race-chips" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
-          </div>
+        <div id="race-chips" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2"></div>
+      </div>
+    </div>
+
+    <div id="panel-manual" class="hidden bg-zinc-950 border border-zinc-900 rounded-lg p-4 space-y-3">
+      <div>
+        <label class="text-[10px] font-black text-zinc-500 uppercase tracking-wider block mb-1.5">Manual Race Card Text Matrix Override</label>
+        <textarea id="input-text" rows="4" placeholder="If calendar timeouts or quota limits block live search -> Paste full HKJC page raw text directly here..." 
+                  class="w-full bg-black border border-zinc-900 rounded-md px-3 py-2 text-xs text-zinc-300 font-mono focus:outline-none focus:border-lime-500/50 transition-all placeholder-zinc-800 resize-none"></textarea>
+      </div>
+      <div class="flex justify-end">
+        <button id="btn-submit-manual" class="w-full sm:w-auto bg-gradient-to-r from-lime-500 to-emerald-500 hover:from-lime-600 hover:to-emerald-600 text-black font-black px-5 py-2.5 rounded text-xs uppercase tracking-wider transition-all active:scale-[0.99]">
+          Run Instant Manual Analytics
+        </button>
+      </div>
+    </div>
+
+    <div id="cooldown-alert" class="hidden bg-amber-950/20 border border-amber-500/40 rounded-lg p-4 flex items-center gap-3">
+      <span class="flex h-2.5 w-2.5 relative">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
+      </span>
+      <div class="font-mono text-xs text-amber-400">
+        <span class="font-bold uppercase tracking-wider">API RATE LIMIT WALL DETECTED:</span>
+        <span id="cooldown-timer-text">Engine cooling down. Resuming data access in 0.00 seconds...</span>
       </div>
     </div>
 
@@ -175,7 +207,13 @@
   </div>
 
   <script>
+    const tabAuto = document.getElementById('tab-auto');
+    const tabManual = document.getElementById('tab-manual');
+    const panelAuto = document.getElementById('panel-auto');
+    const panelManual = document.getElementById('panel-manual');
+
     const btnLoadSchedule = document.getElementById('btn-load-schedule');
+    const btnSubmitManual = document.getElementById('btn-submit-manual');
     const scheduleContainer = document.getElementById('schedule-container');
     const raceChips = document.getElementById('race-chips');
     const loading = document.getElementById('loading');
@@ -184,6 +222,24 @@
     const results = document.getElementById('results');
     const targetLockPanel = document.getElementById('target-lock-panel');
     const targetLockText = document.getElementById('target-lock-text');
+    const cooldownAlert = document.getElementById('cooldown-alert');
+    const cooldownTimerText = document.getElementById('cooldown-timer-text');
+
+    let cooldownInterval = null;
+
+    tabAuto.addEventListener('click', () => {
+      tabAuto.className = "px-4 py-2 text-xs font-black uppercase tracking-wider border-b-2 border-lime-500 text-lime-400 bg-zinc-950/40 rounded-t transition-all";
+      tabManual.className = "px-4 py-2 text-xs font-black uppercase tracking-wider border-b-2 border-transparent text-zinc-500 hover:text-zinc-300 transition-all";
+      panelAuto.classList.remove('hidden');
+      panelManual.classList.add('hidden');
+    });
+
+    tabManual.addEventListener('click', () => {
+      tabManual.className = "px-4 py-2 text-xs font-black uppercase tracking-wider border-b-2 border-lime-500 text-lime-400 bg-zinc-950/40 rounded-t transition-all";
+      tabAuto.className = "px-4 py-2 text-xs font-black uppercase tracking-wider border-b-2 border-transparent text-zinc-500 hover:text-zinc-300 transition-all";
+      panelManual.classList.remove('hidden');
+      panelAuto.classList.add('hidden');
+    });
 
     function cleanAndConvertOdds(decimalStr) {
       if (!decimalStr) return '+100';
@@ -197,6 +253,49 @@
       }
     }
 
+    // INTELLIGENT FRONTEND COOLDOWN CLOCK SHIELD
+    function handleSystemErrors(errorMessage) {
+      errorBox.classList.add('hidden');
+      
+      // Parse quota/rate limits and read exact retry times
+      if (errorMessage.includes("quota") || errorMessage.includes("Quota exceeded") || errorMessage.includes("limit")) {
+        let match = errorMessage.match(/retry in ([\d.]+)s/i);
+        let secondsToWait = match ? Math.ceil(parseFloat(match[1])) : 24;
+        
+        triggerTerminalLockdown(secondsToWait);
+      } else {
+        errorBox.textContent = `TARGET PROCESSING FAULT: ${errorMessage}`;
+        errorBox.classList.remove('hidden');
+      }
+    }
+
+    function triggerTerminalLockdown(durationSeconds) {
+      clearInterval(cooldownInterval);
+      cooldownAlert.classList.remove('hidden');
+      
+      // Lock actions
+      btnLoadSchedule.disabled = true;
+      btnSubmitManual.disabled = true;
+      Array.from(raceChips.getElementsByTagName('button')).forEach(b => b.disabled = true);
+
+      let timeLeft = durationSeconds;
+      cooldownTimerText.textContent = `Engine free-tier quota saturated. Safe system unlock automated in ${timeLeft} seconds...`;
+
+      cooldownInterval = setInterval(() => {
+        timeLeft--;
+        if (timeLeft <= 0) {
+          clearInterval(cooldownInterval);
+          cooldownAlert.classList.add('hidden');
+          btnLoadSchedule.disabled = false;
+          btnSubmitManual.disabled = false;
+          Array.from(raceChips.getElementsByTagName('button')).forEach(b => b.disabled = false);
+        } else {
+          cooldownTimerText.textContent = `Engine free-tier quota saturated. Safe system unlock automated in ${timeLeft} seconds...`;
+        }
+      }, 1000);
+    }
+
+    // MODE 1: AUTOMATED LIVE SEARCH CALENDAR ACTIONS
     btnLoadSchedule.addEventListener('click', async () => {
       errorBox.classList.add('hidden');
       scheduleContainer.classList.add('hidden');
@@ -221,8 +320,7 @@
 
         buildRaceButtons(dateVal, data.races || []);
       } catch (err) {
-        errorBox.textContent = `CALENDAR TIMEOUT REPORT: ${err.message}`;
-        errorBox.classList.remove('hidden');
+        handleSystemErrors(err.message);
       } finally {
         loading.classList.add('hidden');
       }
@@ -235,7 +333,7 @@
       } else {
         racesList.forEach(race => {
           const btn = document.createElement('button');
-          btn.className = "bg-black border border-zinc-900 hover:border-lime-500 text-left p-2.5 rounded transition-all flex flex-col justify-between group";
+          btn.className = "bg-black border border-zinc-900 hover:border-lime-500 text-left p-2.5 rounded transition-all flex flex-col justify-between group disabled:opacity-40 disabled:hover:border-zinc-900";
           
           btn.innerHTML = `
             <span class="mono text-[9px] font-bold text-lime-400/80 group-hover:text-lime-400 uppercase tracking-tight">${race.time || race.Time || 'TBD'}</span>
@@ -246,7 +344,6 @@
             const timeLabel = race.time || race.Time || 'TBD';
             const nameLabel = race.name || race.Name || 'Race';
             
-            // Set the target lock button visible instantly on click
             targetLockText.textContent = `${dateStr.toUpperCase()} @ ${timeLabel.toUpperCase()} — ${nameLabel.toUpperCase()}`;
             targetLockPanel.classList.remove('hidden');
             
@@ -277,29 +374,59 @@
 
         renderAdvancedSportsbookLayout(data, dateStr, raceName, raceTime);
       } catch (err) {
-        errorBox.textContent = `TARGET PROCESSING FAULT: ${err.message}`;
-        errorBox.classList.remove('hidden');
+        handleSystemErrors(err.message);
       } finally {
         loading.classList.add('hidden');
       }
     }
 
+    // MODE 2: MANUAL OVERDRIVE RECOVERY ACTION (ZERO-TIMEOUT BACKUP VALVE)
+    btnSubmitManual.addEventListener('click', async () => {
+      errorBox.classList.add('hidden');
+      results.classList.add('hidden');
+      targetLockPanel.classList.add('hidden');
+
+      const textValue = document.getElementById('input-text').value.trim();
+      if (!textValue) return alert('Paste valid HKJC raw context data first before running override analytics.');
+
+      loadingText.textContent = "EXTRACTING QUANT LINES FROM TEXT BLOCKS (TURBO INSTANT MODE)...";
+      loading.classList.remove('hidden');
+
+      try {
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ rawText: textValue })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'The manual layout engine was unable to break context.');
+
+        targetLockText.textContent = `MANUAL TEXT DUMP IMPORTED — ${data.raceName || 'INJECTED RACE'}`;
+        targetLockPanel.classList.remove('hidden');
+
+        renderAdvancedSportsbookLayout(data, "PASTED DATA", data.raceName || "Race", "CURRENT");
+      } catch (err) {
+        handleSystemErrors(err.message);
+      } finally {
+        loading.classList.add('hidden');
+      }
+    });
+
     function renderAdvancedSportsbookLayout(data, selectedDate, selectedRace, selectedTime) {
-      // Extract structural layers defensively regardless of where Gemini nests it
       const coreAnalysis = data.analysis || data;
       const rawRunners = coreAnalysis.runners || data.runners || [];
       const rawStable = coreAnalysis.top5Guaranteed || data.top5Guaranteed || [];
       const rawUpsets = coreAnalysis.top5Upsets || data.top5Upsets || [];
       
       document.getElementById('res-title').textContent = data.raceName || selectedRace;
-      document.getElementById('res-date').textContent = `${selectedDate.toUpperCase()} // POST TIME: ${selectedTime.toUpperCase()}`;
+      document.getElementById('res-date').textContent = `${selectedDate.toUpperCase()} // TIME STATUS: ${selectedTime.toUpperCase()}`;
       document.getElementById('res-track').textContent = data.trackCondition || coreAnalysis.trackCondition || 'Good / Firm';
-      document.getElementById('res-summary').textContent = coreAnalysis.summary || "Analysis extraction verified successfully.";
+      document.getElementById('res-summary').textContent = coreAnalysis.summary || "Analysis matrix calculated.";
 
       document.getElementById('exotic-quinella').textContent = coreAnalysis.exoticBetSuggestions?.quinella || 'Data parsing complete.';
       document.getElementById('exotic-tierce').textContent = coreAnalysis.exoticBetSuggestions?.tierce || 'Data parsing complete.';
 
-      // DEFENSIVE MAPPER: Map horse fields using cross-referenced alias fallback properties
       const runners = rawRunners.map(item => {
         return {
           horseNumber: item.horseNumber ?? item.number ?? item.no ?? item.gate ?? '?',
@@ -323,7 +450,7 @@
       const topSafetyRunners = [...runners].slice(0, 3);
       
       if (topSafetyRunners.length === 0) {
-        safestContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">Insufficient data array mapping.</p>`;
+        safestContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">Insufficient data.</p>`;
       } else {
         topSafetyRunners.forEach(horse => {
           const div = document.createElement('div');
@@ -338,7 +465,7 @@
               <span class="mono text-[10px] text-lime-400 font-black">${placeSafetyFactor}% Place Cover</span>
             </div>
             <div class="text-[10px] text-zinc-400"><span class="text-lime-500 font-bold">MARKET LINE:</span> ${cleanAndConvertOdds(horse.hkjcOdds)} Place Line</div>
-            <p class="text-[9px] text-zinc-600 leading-tight">Safety fallback protecting podium placement layout chains.</p>
+            <p class="text-[9px] text-zinc-600 leading-tight">Safety fallback protecting podium placement chains.</p>
           `;
           safestContainer.appendChild(div);
         });
