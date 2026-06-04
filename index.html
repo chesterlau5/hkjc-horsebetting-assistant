@@ -17,13 +17,12 @@
 
   <div class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
     
-    <!-- Sharp Sportsbook Header -->
     <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-900 pb-5 gap-4">
       <div>
         <div class="flex items-center gap-2">
           <span class="inline-flex items-center gap-1 bg-lime-500/10 text-lime-400 border border-lime-500/20 text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider">
             <span class="h-1.5 w-1.5 rounded-full bg-lime-500"></span>
-            LIVE QUANT MATRIX v4.0
+            LIVE QUANT MATRIX v4.2
           </span>
         </div>
         <h1 class="text-2xl font-black tracking-tight mt-1 text-white uppercase">
@@ -32,11 +31,10 @@
       </div>
       <div class="text-left sm:text-right font-mono text-[10px] text-zinc-600 space-y-0.5">
         <p>SYSTEM INFERENCE // GEMINI.FLASH</p>
-        <p>ODDS ENGINE // AMERICAN MONEYLINE OVERRIDE</p>
+        <p>ODDS ENGINE // PURE VEGAS MONEYLINE ALIGNED</p>
       </div>
     </header>
 
-    <!-- Raw Context Input Window -->
     <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4">
       <div class="flex items-center justify-between mb-2">
         <label class="text-[10px] font-black text-zinc-500 uppercase tracking-wider">Race Card Source Payload</label>
@@ -52,19 +50,15 @@
       </div>
     </div>
 
-    <!-- Sporty Inline Loader -->
     <div id="loading" class="hidden text-center py-12 bg-zinc-950 border border-zinc-900 rounded-lg">
       <div class="inline-block animate-spin rounded-full h-6 w-6 border-2 border-t-lime-400 border-zinc-900 mb-2"></div>
       <p class="text-[10px] font-mono tracking-widest text-zinc-500 uppercase">Calculating implied probabilities and sports-line spreads...</p>
     </div>
 
-    <!-- Error Diagnostics -->
     <div id="error-box" class="hidden bg-red-950/30 border border-red-900 text-red-400 p-4 rounded-lg font-mono text-xs"></div>
 
-    <!-- PRIMARY DASHBOARD DISPLAY -->
     <main id="results" class="hidden space-y-6">
       
-      <!-- Race Info Header Strip -->
       <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 id="res-title" class="text-lg font-black text-white tracking-tight uppercase">Race Matrix</h2>
@@ -76,18 +70,15 @@
         </div>
       </div>
 
-      <!-- Tactical Summary Statement -->
       <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4">
         <span class="text-[9px] font-black uppercase tracking-wider text-zinc-500 block mb-1.5">Pace Bias Matrix Analysis</span>
         <p id="res-summary" class="text-zinc-400 text-xs leading-relaxed font-medium"></p>
       </div>
 
-      <!-- THREE-TIER SELECTION ARCHITECTURE -->
       <div>
         <span class="text-[9px] font-black uppercase tracking-wider text-zinc-500 block mb-2.5">Targeted Play Classifications</span>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
           
-          <!-- TIER 1: ABSOLUTE SAFEST COVERS (PLACE/SHOW) -->
           <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col justify-between border-t-2 border-t-lime-500">
             <div>
               <div class="flex items-center justify-between mb-3 pb-2 border-b border-zinc-900">
@@ -98,12 +89,10 @@
                 <span class="text-[8px] font-mono font-bold text-lime-400 bg-lime-500/10 px-1.5 py-0.5 rounded border border-lime-500/20">LOW VARIANCE</span>
               </div>
               <div id="safest-container" class="space-y-2">
-                <!-- Calculated dynamically from top probability runners -->
-              </div>
+                </div>
             </div>
           </div>
 
-          <!-- TIER 2: HIGH-STABILITY REVENUE -->
           <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col justify-between border-t-2 border-t-emerald-500">
             <div>
               <div class="flex items-center justify-between mb-3 pb-2 border-b border-zinc-900">
@@ -114,12 +103,10 @@
                 <span class="text-[8px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">STABLE VALUE</span>
               </div>
               <div id="guaranteed-container" class="space-y-2">
-                <!-- Injected from backend -->
-              </div>
+                </div>
             </div>
           </div>
 
-          <!-- TIER 3: HIGH-MULTIPLIER UPSETS -->
           <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col justify-between border-t-2 border-t-indigo-500">
             <div>
               <div class="flex items-center justify-between mb-3 pb-2 border-b border-zinc-900">
@@ -130,15 +117,13 @@
                 <span class="text-[8px] font-mono font-bold text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20">CALCULATED RISK</span>
               </div>
               <div id="upsets-container" class="space-y-2">
-                <!-- Injected from backend -->
-              </div>
+                </div>
             </div>
           </div>
 
         </div>
       </div>
 
-      <!-- MAIN CORE PERFORMANCE SPREADSHEET -->
       <div class="bg-zinc-950 border border-zinc-900 rounded-lg overflow-hidden">
         <div class="px-4 py-3 border-b border-zinc-900 bg-black flex justify-between items-center">
           <h3 class="text-xs font-black text-zinc-400 uppercase tracking-wider">Advanced Data-Line Matrix</h3>
@@ -159,13 +144,11 @@
               </tr>
             </thead>
             <tbody id="runners-rows" class="divide-y divide-zinc-900 bg-black/40">
-              <!-- Dynamically populated rows -->
-            </tbody>
+              </tbody>
           </table>
         </div>
       </div>
 
-      <!-- EXOTIC SPECULATIVE SYSTEMS COMBOS -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4">
           <div class="text-[9px] font-mono font-black text-lime-400 uppercase tracking-widest mb-1 border-b border-zinc-900 pb-1">Quinella Exotics Formula Base</div>
@@ -186,14 +169,22 @@
     const errorBox = document.getElementById('error-box');
     const results = document.getElementById('results');
 
-    // Robust Odds Standardizer Helper to force explicit +/- signs on everything American Moneyline
-    function formatAmericanOdds(oddsStr) {
-      if (!oddsStr) return 'EVEN';
-      let clean = oddsStr.toString().trim();
-      if (clean.startsWith('+') || clean.startsWith('-')) return clean;
-      let num = parseFloat(clean);
-      if (!isNaN(num) && num > 0) return `+${num}`;
-      return clean;
+    // MATHEMATICALLY PRECISE DECI -> AMERICAN VEGAS LINE CONVERTER (+300, -150)
+    function cleanAndConvertOdds(decimalStr) {
+      if (!decimalStr) return '+100';
+      
+      // Clean up string to isolate just numbers and decimals
+      let clean = decimalStr.toString().replace(/[^0-9.]/g, '');
+      let d = parseFloat(clean);
+      if (isNaN(d) || d <= 1.0) return '+100';
+      
+      if (d >= 2.0) {
+        let positiveLine = Math.round((d - 1) * 100);
+        return `+${positiveLine}`;
+      } else {
+        let negativeLine = Math.round(-100 / (d - 1));
+        return `${negativeLine}`; // Javascript naturally outputs the minus sign
+      }
     }
 
     btnSubmit.addEventListener('click', async () => {
@@ -236,21 +227,20 @@
       const runners = data.analysis.runners || [];
       runners.sort((a, b) => b.winProbability - a.winProbability);
 
-      // --- DYNAMICALLY COMPUTE AND POPULATE NEW TIER 1: ABSOLUTE SAFEST COVERS PANEL ---
+      // --- TIER 1: ABSOLUTE SAFEST COVERS PANEL (AUTOMATED TO USE VEGAS COVERS) ---
       const safestContainer = document.getElementById('safest-container');
       safestContainer.innerHTML = '';
       
-      // Filter out top 3 runners based on pure win probability weight for coverage safety conversion
       const topSafetyRunners = [...runners].slice(0, 3);
       
       if (topSafetyRunners.length === 0) {
-        safestContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">Insufficient dataset criteria for calculations.</p>`;
+        safestContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">Insufficient dataset criteria.</p>`;
       } else {
         topSafetyRunners.forEach(horse => {
           const div = document.createElement('div');
           div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
           
-          // Place probability conversion estimation formula (Win Probability amplified to model safe placement coverage)
+          // Calculate Place probability conversion multiplier
           const placeSafetyFactor = Math.min(98, Math.round(horse.winProbability * 2.1));
           
           div.innerHTML = `
@@ -261,22 +251,26 @@
               </div>
               <span class="mono text-[10px] text-lime-400 font-black">${placeSafetyFactor}% Place Cover</span>
             </div>
-            <div class="text-[10px] text-zinc-400"><span class="text-lime-500 font-bold">MARKET PLAY:</span> Place / Show Bet (Top 3 Cover Strategy)</div>
-            <p class="text-[9px] text-zinc-600 leading-tight">Calculated mitigation strategy down-shifts ${horse.winProbability}% Win capacity to maximize parlay leg protection.</p>
+            <div class="text-[10px] text-zinc-400"><span class="text-lime-500 font-bold">MARKET LINE:</span> ${cleanAndConvertOdds(horse.hkjcOdds)} Place Line</div>
+            <p class="text-[9px] text-zinc-600 leading-tight">Safety fallback shifting ${horse.winProbability}% Win capacity to safeguard Top 3 podium placement.</p>
           `;
           safestContainer.appendChild(div);
         });
       }
 
-      // --- POPULATE TIER 2: HIGH-STABILITY CASH PLAYS ---
+      // --- TIER 2: HIGH-STABILITY REVENUE ---
       const guaranteedContainer = document.getElementById('guaranteed-container');
       guaranteedContainer.innerHTML = '';
       const stablePlays = data.analysis.top5Guaranteed || [];
       
       if (stablePlays.length === 0) {
-        guaranteedContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No definitive safety locks detected in field variance.</p>`;
+        guaranteedContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No locks detected.</p>`;
       } else {
-        stablePlays.slice(0, 3).forEach(play => { // Slice to 3 to keep layout beautifully unified across grid
+        stablePlays.slice(0, 3).forEach(play => {
+          // Look up current decimal odds from runners list for safety converting
+          const linkedHorse = runners.find(h => h.horseNumber === play.horseNumber);
+          const computedVegasOdds = linkedHorse ? cleanAndConvertOdds(linkedHorse.hkjcOdds) : cleanAndConvertOdds(play.vegasOdds);
+
           const div = document.createElement('div');
           div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
           div.innerHTML = `
@@ -285,7 +279,7 @@
                 <span class="mono text-[9px] font-black bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1 py-0.5 rounded">#${play.horseNumber}</span>
                 <span class="font-extrabold text-xs text-zinc-150">${play.horseName}</span>
               </div>
-              <span class="mono text-[10px] text-emerald-400 font-bold">${formatAmericanOdds(play.vegasOdds)}</span>
+              <span class="mono text-[10px] text-emerald-400 font-bold">${computedVegasOdds}</span>
             </div>
             <div class="text-[10px] text-zinc-400"><span class="text-emerald-500 font-bold">MARKET PLAY:</span> ${play.recommendedBet}</div>
             <p class="text-[9px] text-zinc-600 leading-tight truncate">${play.executionStrategy}</p>
@@ -294,15 +288,18 @@
         });
       }
 
-      // --- POPULATE TIER 3: HIGH-MULTIPLIER UPSETS ---
+      // --- TIER 3: HIGH-MULTIPLIER UPSETS ---
       const upsetsContainer = document.getElementById('upsets-container');
       upsetsContainer.innerHTML = '';
       const upsetPlays = data.analysis.top5Upsets || [];
       
       if (upsetPlays.length === 0) {
-        upsetsContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No explosive matrix inefficiencies computed in tracking model.</p>`;
+        upsetsContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No matrix inefficiencies computed.</p>`;
       } else {
-        upsetPlays.slice(0, 3).forEach(play => { // Slice to 3 to keep grid dimensions flawless
+        upsetPlays.slice(0, 3).forEach(play => {
+          const linkedHorse = runners.find(h => h.horseNumber === play.horseNumber);
+          const computedVegasOdds = linkedHorse ? cleanAndConvertOdds(linkedHorse.hkjcOdds) : cleanAndConvertOdds(play.vegasOdds);
+
           const div = document.createElement('div');
           div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
           div.innerHTML = `
@@ -311,7 +308,7 @@
                 <span class="mono text-[9px] font-black bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-1 py-0.5 rounded">#${play.horseNumber}</span>
                 <span class="font-extrabold text-xs text-zinc-150">${play.horseName}</span>
               </div>
-              <span class="mono text-[10px] text-amber-400 font-black">${formatAmericanOdds(play.vegasOdds)}</span>
+              <span class="mono text-[10px] text-amber-400 font-black">${computedVegasOdds}</span>
             </div>
             <div class="text-[10px] text-zinc-400"><span class="text-indigo-400 font-bold">MARKET PLAY:</span> ${play.recommendedBet}</div>
             <p class="text-[9px] text-zinc-600 leading-tight truncate">${play.upsetTrigger}</p>
@@ -320,7 +317,7 @@
         });
       }
 
-      // --- POPULATE MAIN PERFORMANCE DATASHEET MATRIX ---
+      // --- POPULATE MAIN DATA LINES TABLE ---
       const tbody = document.getElementById('runners-rows');
       tbody.innerHTML = '';
 
@@ -332,7 +329,6 @@
         if (horse.expertSentiment === 'Bullish') sentimentClass = "bg-lime-500/10 text-lime-400 border border-lime-500/20";
         if (horse.expertSentiment === 'Bearish') sentimentClass = "bg-red-500/10 text-red-400 border border-red-500/20";
 
-        // Traffic-Light Spread Meters instead of clunky text blocks
         let visualChartHtml = '';
         if (horse.oddsValue === 'Good') {
           visualChartHtml = `
@@ -362,7 +358,7 @@
             <div class="font-black text-xs text-zinc-200 group-hover:text-lime-400 transition-colors">${horse.horseName}</div>
             <div class="text-[9px] text-zinc-500 max-w-xs truncate"><span class="text-zinc-400 font-bold">Edge:</span> ${horse.keyEdge}</div>
           </td>
-          <td class="py-2.5 px-4 text-center mono text-xs font-black text-white bg-zinc-950/20">${formatAmericanOdds(horse.vegasOdds)}</td>
+          <td class="py-2.5 px-4 text-center mono text-xs font-black text-white bg-zinc-950/20">${cleanAndConvertOdds(horse.hkjcOdds)}</td>
           <td class="py-2.5 px-4 text-center mono text-xs font-bold text-zinc-500">${horse.hkjcOdds}</td>
           <td class="py-2.5 px-4 text-center">${visualChartHtml}</td>
           <td class="py-2.5 px-4">
