@@ -17,12 +17,13 @@
 
   <div class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
     
+    <!-- Sportsbook Header -->
     <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-900 pb-5 gap-4">
       <div>
         <div class="flex items-center gap-2">
           <span class="inline-flex items-center gap-1 bg-lime-500/10 text-lime-400 border border-lime-500/20 text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider">
             <span class="h-1.5 w-1.5 rounded-full bg-lime-500"></span>
-            AUTOMATED DATELINE MATRIX v5.2
+            AUTOMATED DATELINE MATRIX v5.3
           </span>
         </div>
         <h1 class="text-2xl font-black tracking-tight mt-1 text-white uppercase">
@@ -31,10 +32,11 @@
       </div>
       <div class="text-left sm:text-right font-mono text-[10px] text-zinc-600 space-y-0.5">
         <p>SYSTEM INFERENCE // GEMINI.FLASH</p>
-        <p>CONTROL MODE // DATETIME CHIP STRIP ALIGNED</p>
+        <p>CONTROL MODE // DATETIME TARGET LOCK ACTIVE</p>
       </div>
     </header>
 
+    <!-- Automated Date Input -->
     <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 space-y-4">
       <div class="flex flex-col sm:flex-row items-end gap-3">
         <div class="flex-1 w-full">
@@ -47,42 +49,55 @@
         </button>
       </div>
 
+      <!-- Race Timeline chips panel -->
       <div id="schedule-container" class="hidden border-t border-zinc-900 pt-3 space-y-2">
         <span class="text-[9px] font-black text-zinc-600 uppercase tracking-wider block">Scheduled Race Meetings Grid:</span>
         <div id="race-chips" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
-          </div>
+          <!-- Populated via Javascript -->
+        </div>
       </div>
     </div>
 
+    <!-- Sporty Inline Loader -->
     <div id="loading" class="hidden text-center py-12 bg-zinc-950 border border-zinc-900 rounded-lg">
       <div class="inline-block animate-spin rounded-full h-6 w-6 border-2 border-t-lime-400 border-zinc-900 mb-2"></div>
       <p id="loading-text" class="text-[10px] font-mono tracking-widest text-zinc-500 uppercase">Processing system queries...</p>
     </div>
 
+    <!-- Error Diagnostics -->
     <div id="error-box" class="hidden bg-red-950/30 border border-red-900 text-red-400 p-4 rounded-lg font-mono text-xs"></div>
 
+    <!-- PRIMARY DASHBOARD DISPLAY -->
     <main id="results" class="hidden space-y-6">
       
+      <!-- Race Info Header Strip with Integrated Memory Badge -->
       <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 id="res-title" class="text-lg font-black text-white tracking-tight uppercase">Race Matrix</h2>
-          <p id="res-date" class="text-[10px] font-mono text-lime-400 mt-0.5 tracking-wider">TIMESTAMP</p>
+          <!-- High Visibility Sticky Active Selection Badge -->
+          <div id="active-selection-badge" class="inline-flex items-center gap-1.5 bg-lime-500/10 text-lime-400 border border-lime-500/20 text-[10px] font-black px-2.5 py-1 rounded uppercase tracking-wider mb-2.5">
+            <!-- Dynamically populated e.g. JUNE 7, 2026 @ 9:15 PM HKT -->
+          </div>
+          <h2 id="res-title" class="text-xl font-black text-white tracking-tight uppercase">Race Matrix</h2>
+          <p id="res-date" class="text-[10px] font-mono text-zinc-500 mt-0.5 tracking-wider">TIMESTAMP</p>
         </div>
         <div class="bg-black border border-zinc-900 px-3 py-1.5 rounded flex flex-col">
-          <span class="text-[8px] uppercase font-black text-zinc-650 tracking-wider">TRACK STATUS</span>
+          <span class="text-[8px] uppercase font-black text-zinc-600 tracking-wider">TRACK STATUS</span>
           <span id="res-track" class="text-xs font-black text-lime-400">GOOD</span>
         </div>
       </div>
 
+      <!-- Tactical Summary Statement -->
       <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4">
         <span class="text-[9px] font-black uppercase tracking-wider text-zinc-500 block mb-1.5">Pace Bias Matrix Analysis</span>
         <p id="res-summary" class="text-zinc-400 text-xs leading-relaxed font-medium"></p>
       </div>
 
+      <!-- THREE-TIER SELECTION ARCHITECTURE -->
       <div>
         <span class="text-[9px] font-black uppercase tracking-wider text-zinc-500 block mb-2.5">Targeted Play Classifications</span>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
           
+          <!-- TIER 1: ABSOLUTE SAFEST COVERS (PLACE/SHOW) -->
           <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col justify-between border-t-2 border-t-lime-500">
             <div>
               <div class="flex items-center justify-between mb-3 pb-2 border-b border-zinc-900">
@@ -92,11 +107,11 @@
                 </h3>
                 <span class="text-[8px] font-mono font-bold text-lime-400 bg-lime-500/10 px-1.5 py-0.5 rounded border border-lime-500/20">LOW VARIANCE</span>
               </div>
-              <div id="safest-container" class="space-y-2">
-                </div>
+              <div id="safest-container" class="space-y-2"></div>
             </div>
           </div>
 
+          <!-- TIER 2: HIGH-STABILITY REVENUE -->
           <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col justify-between border-t-2 border-t-emerald-500">
             <div>
               <div class="flex items-center justify-between mb-3 pb-2 border-b border-zinc-900">
@@ -106,11 +121,11 @@
                 </h3>
                 <span class="text-[8px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">STABLE VALUE</span>
               </div>
-              <div id="guaranteed-container" class="space-y-2">
-                </div>
+              <div id="guaranteed-container" class="space-y-2"></div>
             </div>
           </div>
 
+          <!-- TIER 3: HIGH-MULTIPLIER UPSETS -->
           <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col justify-between border-t-2 border-t-indigo-500">
             <div>
               <div class="flex items-center justify-between mb-3 pb-2 border-b border-zinc-900">
@@ -120,14 +135,14 @@
                 </h3>
                 <span class="text-[8px] font-mono font-bold text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20">CALCULATED RISK</span>
               </div>
-              <div id="upsets-container" class="space-y-2">
-                </div>
+              <div id="upsets-container" class="space-y-2"></div>
             </div>
           </div>
 
         </div>
       </div>
 
+      <!-- MAIN CORE PERFORMANCE SPREADSHEET -->
       <div class="bg-zinc-950 border border-zinc-900 rounded-lg overflow-hidden">
         <div class="px-4 py-3 border-b border-zinc-900 bg-black flex justify-between items-center">
           <h3 class="text-xs font-black text-zinc-400 uppercase tracking-wider">Advanced Data-Line Matrix</h3>
@@ -147,12 +162,12 @@
                 <th class="py-2.5 px-4 text-center">Sentiment</th>
               </tr>
             </thead>
-            <tbody id="runners-rows" class="divide-y divide-zinc-900 bg-black/40">
-              </tbody>
+            <tbody id="runners-rows" class="divide-y divide-zinc-900 bg-black/40"></tbody>
           </table>
         </div>
       </div>
 
+      <!-- EXOTIC SPECULATIVE SYSTEMS COMBOS -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4">
           <div class="text-[9px] font-mono font-black text-lime-400 uppercase tracking-widest mb-1 border-b border-zinc-900 pb-1">Quinella Exotics Formula Base</div>
@@ -176,13 +191,11 @@
     const errorBox = document.getElementById('error-box');
     const results = document.getElementById('results');
 
-    // Precision Decimal -> American Vegas Line Converter (+300, -150)
     function cleanAndConvertOdds(decimalStr) {
       if (!decimalStr) return '+100';
       let clean = decimalStr.toString().replace(/[^0-9.]/g, '');
       let d = parseFloat(clean);
       if (isNaN(d) || d <= 1.0) return '+100';
-      
       if (d >= 2.0) {
         return `+${Math.round((d - 1) * 100)}`;
       } else {
@@ -190,7 +203,6 @@
       }
     }
 
-    // LOAD SCHEDULE HANDLER
     btnLoadSchedule.addEventListener('click', async () => {
       errorBox.classList.add('hidden');
       scheduleContainer.classList.add('hidden');
@@ -221,7 +233,6 @@
       }
     });
 
-    // BUILD CHIPS WITH RACE TIMES INTEGRATED
     function buildRaceButtons(dateStr, racesList) {
       raceChips.innerHTML = '';
       if(racesList.length === 0) {
@@ -236,15 +247,15 @@
             <span class="font-black text-xs text-zinc-300 group-hover:text-white uppercase mt-0.5">${race.name}</span>
           `;
           
-          btn.addEventListener('click', () => executeAutomatedRaceAnalysis(dateStr, race.name));
+          // Pass date and time strings down into the analyzer function
+          btn.addEventListener('click', () => executeAutomatedRaceAnalysis(dateStr, race.name, race.time || 'TBD'));
           raceChips.appendChild(btn);
         });
       }
       scheduleContainer.classList.remove('hidden');
     }
 
-    // TARGETED DEEP ENGINE INFERENCE TRIPS
-    async function executeAutomatedRaceAnalysis(dateStr, raceName) {
+    async function executeAutomatedRaceAnalysis(dateStr, raceName, raceTime) {
       errorBox.classList.add('hidden');
       results.classList.add('hidden');
       
@@ -261,7 +272,7 @@
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || 'The backend failed to isolate the targeted race parameters.');
 
-        renderAdvancedSportsbookLayout(data);
+        renderAdvancedSportsbookLayout(data, dateStr, raceName, raceTime);
       } catch (err) {
         errorBox.textContent = `TARGET PROCESSING FAULT: ${err.message}`;
         errorBox.classList.remove('hidden');
@@ -270,9 +281,16 @@
       }
     }
 
-    function renderAdvancedSportsbookLayout(data) {
+    function renderAdvancedSportsbookLayout(data, selectedDate, selectedRace, selectedTime) {
+      // Inject Active Selection Badge for visual memory anchoring
+      const badge = document.getElementById('active-selection-badge');
+      badge.innerHTML = `
+        <span class="h-1.5 w-1.5 rounded-full bg-lime-500 animate-pulse"></span>
+        TARGETING: ${selectedDate.toUpperCase()} @ ${selectedTime.toUpperCase()} — ${selectedRace.toUpperCase()}
+      `;
+
       document.getElementById('res-title').textContent = data.raceName;
-      document.getElementById('res-date').textContent = data.date;
+      document.getElementById('res-date').textContent = `${selectedDate.toUpperCase()} // POST TIME: ${selectedTime.toUpperCase()}`;
       document.getElementById('res-track').textContent = data.trackCondition || 'Good / Firm';
       document.getElementById('res-summary').textContent = data.analysis.summary;
 
@@ -282,11 +300,10 @@
       const runners = data.analysis.runners || [];
       runners.sort((a, b) => b.winProbability - a.winProbability);
 
-      // --- TIER 1: ABSOLUTE SAFEST COVERS PANEL ---
+      // --- TIER 1: ABSOLUTE SAFEST COVERS ---
       const safestContainer = document.getElementById('safest-container');
       safestContainer.innerHTML = '';
       const topSafetyRunners = [...runners].slice(0, 3);
-      
       if (topSafetyRunners.length === 0) {
         safestContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">Insufficient data.</p>`;
       } else {
@@ -294,7 +311,6 @@
           const div = document.createElement('div');
           div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
           const placeSafetyFactor = Math.min(98, Math.round(horse.winProbability * 2.1));
-          
           div.innerHTML = `
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-1.5">
@@ -314,14 +330,12 @@
       const guaranteedContainer = document.getElementById('guaranteed-container');
       guaranteedContainer.innerHTML = '';
       const stablePlays = data.analysis.top5Guaranteed || [];
-      
       if (stablePlays.length === 0) {
         guaranteedContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No locks detected.</p>`;
       } else {
         stablePlays.slice(0, 3).forEach(play => {
           const linkedHorse = runners.find(h => h.horseNumber === play.horseNumber);
           const computedVegasOdds = linkedHorse ? cleanAndConvertOdds(linkedHorse.hkjcOdds) : cleanAndConvertOdds(play.vegasOdds);
-
           const div = document.createElement('div');
           div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
           div.innerHTML = `
@@ -343,14 +357,12 @@
       const upsetsContainer = document.getElementById('upsets-container');
       upsetsContainer.innerHTML = '';
       const upsetPlays = data.analysis.top5Upsets || [];
-      
       if (upsetPlays.length === 0) {
         upsetsContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No inefficiencies computed.</p>`;
       } else {
         upsetPlays.slice(0, 3).forEach(play => {
           const linkedHorse = runners.find(h => h.horseNumber === play.horseNumber);
           const computedVegasOdds = linkedHorse ? cleanAndConvertOdds(linkedHorse.hkjcOdds) : cleanAndConvertOdds(play.vegasOdds);
-
           const div = document.createElement('div');
           div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
           div.innerHTML = `
@@ -368,10 +380,9 @@
         });
       }
 
-      // --- POPULATE MAIN CORE PERFORMANCE DATASHEET MATRIX ---
+      // --- POPULATE MAIN PERFORMANCE DATASHEET ---
       const tbody = document.getElementById('runners-rows');
       tbody.innerHTML = '';
-
       runners.forEach(horse => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-zinc-950 transition-colors group";
