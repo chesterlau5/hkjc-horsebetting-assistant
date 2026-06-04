@@ -6,35 +6,56 @@ export default async function handler(req, res) {
   try {
     const { rawText } = req.body;
     if (!rawText || rawText.trim().length < 50) {
-      return res.status(400).json({ error: 'Data context is too short or empty.' });
+      return res.status(400).json({ error: 'Data context is too short.' });
     }
 
     const geminiApiKey = process.env.GEMINI_API_KEY;
     if (!geminiApiKey) {
-      return res.status(500).json({ error: 'Server configuration error: Missing API Key.' });
+      return res.status(500).json({ error: 'Missing API Key configuration.' });
     }
 
     const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`;
 
-    const systemInstruction = `You are an expert, objective horse racing statistical analyst specializing in Hong Kong Jockey Club data. Analyze the provided race card data layout to isolate key statistical advantages. Never guarantee outcomes or make specific absolute predictions. Evaluate the field purely based on historical edges. You must structure your entire output strictly as a JSON object matching this schema:
+    const systemInstruction = `You are a high-stakes, elite quantitative horse racing analyst for Hong Kong racing. Your job is to process raw race card data, search the live web for expert opinions, tipster consensus, and current betting trends, and compile a definitive data-driven matrix.
+    
+    Calculate three metrics for every notable horse:
+    1. Estimated HKJC Decimal Odds (e.g., 4.50)
+    2. Vegas/American Odds (e.g., +350 or -110)
+    3. Implied Win Probability % based on form, barrier, and search trends.
+    
+    You must output strictly a JSON object matching this schema precisely:
     {
       "raceName": "string",
       "date": "string",
+      "trackCondition": "string (e.g., Good / Muddy / Yielding)",
       "analysis": {
-        "summary": "2-3 sentence summary of the key statistical trends and factors of this race.",
-        "topContenders": [
-          { "horseNumber": number, "horseName": "string", "keyStats": "string", "statisticalEdge": "High" }
+        "summary": "Detailed 3-sentence macro view of track bias, pace scenario, and expert consensus.",
+        "runners": [
+          {
+            "horseNumber": number,
+            "horseName": "string",
+            "hkjcOdds": "string",
+            "vegasOdds": "string",
+            "winProbability": number,
+            "statisticalScore": number,
+            "expertSentiment": "Bullish" or "Bearish" or "Neutral",
+            "keyEdge": "string",
+            "riskFactor": "string"
+          }
         ],
-        "valueHorses": [
-          { "horseNumber": number, "horseName": "string", "keyStats": "string", "statisticalEdge": "Medium" }
-        ],
-        "factorsConsidered": ["string"]
+        "exoticBetSuggestions": {
+          "quinella": "string",
+          "tierce": "string"
+        }
       }
     }`;
 
+    const promptText = `Use your search tool to lookup recent expert tips, betting odds, or trainer insights for the horses listed in this race card. Cross-reference your web findings with this raw text and populate the required JSON format: \n\n${rawText}`;
+
     const geminiPayload = {
-      contents: [{ parts: [{ text: `Analyze this race card data and return the required JSON evaluation format:\n\n${rawText}` }] }],
+      contents: [{ parts: [{ text: promptText }] }],
       systemInstruction: { parts: [{ text: systemInstruction }] },
+      tools: [{ googleSearch: {} }], // Activates live web crawling
       generationConfig: {
         responseMimeType: "application/json",
         temperature: 0.2
@@ -52,7 +73,8 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: geminiData.error?.message || 'Gemini processing failed.' });
     }
 
-    return res.status(200).json(JSON.parse(geminiData.candidates[0].content.parts[0].text));
+    const cleanJson = JSON.parse(geminiData.candidates[0].content.parts[0].text);
+    return res.status(200).json(cleanJson);
 
   } catch (error) {
     return res.status(500).json({ error: 'Internal Server Error: ' + error.message });
