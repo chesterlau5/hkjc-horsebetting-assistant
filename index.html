@@ -22,7 +22,7 @@
         <div class="flex items-center gap-2">
           <span class="inline-flex items-center gap-1 bg-lime-500/10 text-lime-400 border border-lime-500/20 text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider">
             <span class="h-1.5 w-1.5 rounded-full bg-lime-500"></span>
-            LIVE QUANT MATRIX v4.2
+            AUTOMATED DATELINE MATRIX v5.2
           </span>
         </div>
         <h1 class="text-2xl font-black tracking-tight mt-1 text-white uppercase">
@@ -31,28 +31,32 @@
       </div>
       <div class="text-left sm:text-right font-mono text-[10px] text-zinc-600 space-y-0.5">
         <p>SYSTEM INFERENCE // GEMINI.FLASH</p>
-        <p>ODDS ENGINE // PURE VEGAS MONEYLINE ALIGNED</p>
+        <p>CONTROL MODE // DATETIME CHIP STRIP ALIGNED</p>
       </div>
     </header>
 
-    <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4">
-      <div class="flex items-center justify-between mb-2">
-        <label class="text-[10px] font-black text-zinc-500 uppercase tracking-wider">Race Card Source Payload</label>
-        <span class="text-[10px] text-zinc-600 font-mono">SECURE AGGREGATOR</span>
-      </div>
-      <textarea id="input-text" rows="3" placeholder="Paste full HKJC portal raw text data page here..." 
-                class="w-full bg-black border border-zinc-900 rounded-md px-3 py-2 text-xs text-zinc-300 font-mono focus:outline-none focus:border-lime-500/50 transition-all placeholder-zinc-800 resize-none"></textarea>
-      
-      <div class="mt-3 flex justify-end">
-        <button id="btn-submit" class="w-full sm:w-auto bg-gradient-to-r from-lime-500 to-emerald-500 hover:from-lime-600 hover:to-emerald-600 text-black font-black px-5 py-2.5 rounded text-xs uppercase tracking-wider transition-all active:scale-[0.99]">
-          Execute System Inferences
+    <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 space-y-4">
+      <div class="flex flex-col sm:flex-row items-end gap-3">
+        <div class="flex-1 w-full">
+          <label class="text-[10px] font-black text-zinc-500 uppercase tracking-wider block mb-1.5">Select Targeted Race Date</label>
+          <input type="text" id="input-date" placeholder="e.g., June 7, 2026" 
+                 class="w-full bg-black border border-zinc-900 rounded px-3 py-2 text-xs text-zinc-200 font-mono focus:outline-none focus:border-lime-500/50 transition-all placeholder-zinc-800">
+        </div>
+        <button id="btn-load-schedule" class="w-full sm:w-auto bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 font-bold px-4 py-2 rounded text-xs uppercase tracking-wider transition-all">
+          Find Scheduled Races
         </button>
+      </div>
+
+      <div id="schedule-container" class="hidden border-t border-zinc-900 pt-3 space-y-2">
+        <span class="text-[9px] font-black text-zinc-600 uppercase tracking-wider block">Scheduled Race Meetings Grid:</span>
+        <div id="race-chips" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
+          </div>
       </div>
     </div>
 
     <div id="loading" class="hidden text-center py-12 bg-zinc-950 border border-zinc-900 rounded-lg">
       <div class="inline-block animate-spin rounded-full h-6 w-6 border-2 border-t-lime-400 border-zinc-900 mb-2"></div>
-      <p class="text-[10px] font-mono tracking-widest text-zinc-500 uppercase">Calculating implied probabilities and sports-line spreads...</p>
+      <p id="loading-text" class="text-[10px] font-mono tracking-widest text-zinc-500 uppercase">Processing system queries...</p>
     </div>
 
     <div id="error-box" class="hidden bg-red-950/30 border border-red-900 text-red-400 p-4 rounded-lg font-mono text-xs"></div>
@@ -164,56 +168,107 @@
   </div>
 
   <script>
-    const btnSubmit = document.getElementById('btn-submit');
+    const btnLoadSchedule = document.getElementById('btn-load-schedule');
+    const scheduleContainer = document.getElementById('schedule-container');
+    const raceChips = document.getElementById('race-chips');
     const loading = document.getElementById('loading');
+    const loadingText = document.getElementById('loading-text');
     const errorBox = document.getElementById('error-box');
     const results = document.getElementById('results');
 
-    // MATHEMATICALLY PRECISE DECI -> AMERICAN VEGAS LINE CONVERTER (+300, -150)
+    // Precision Decimal -> American Vegas Line Converter (+300, -150)
     function cleanAndConvertOdds(decimalStr) {
       if (!decimalStr) return '+100';
-      
-      // Clean up string to isolate just numbers and decimals
       let clean = decimalStr.toString().replace(/[^0-9.]/g, '');
       let d = parseFloat(clean);
       if (isNaN(d) || d <= 1.0) return '+100';
       
       if (d >= 2.0) {
-        let positiveLine = Math.round((d - 1) * 100);
-        return `+${positiveLine}`;
+        return `+${Math.round((d - 1) * 100)}`;
       } else {
-        let negativeLine = Math.round(-100 / (d - 1));
-        return `${negativeLine}`; // Javascript naturally outputs the minus sign
+        return `${Math.round(-100 / (d - 1))}`;
       }
     }
 
-    btnSubmit.addEventListener('click', async () => {
+    // LOAD SCHEDULE HANDLER
+    btnLoadSchedule.addEventListener('click', async () => {
       errorBox.classList.add('hidden');
+      scheduleContainer.classList.add('hidden');
       results.classList.add('hidden');
       
-      const textValue = document.getElementById('input-text').value.trim();
-      if (!textValue) return alert('Invalid entry. Provide raw race-card text compilation data first.');
+      const dateVal = document.getElementById('input-date').value.trim();
+      if (!dateVal) return alert('Provide a target date to query schedules (e.g., June 7, 2026).');
 
+      loadingText.textContent = `CRUNCHING LIVE CALENDAR DATA FOR ${dateVal.toUpperCase()}...`;
       loading.classList.remove('hidden');
 
       try {
         const response = await fetch('/api/analyze', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ rawText: textValue })
+          body: JSON.stringify({ action: 'fetch_races', date: dateVal })
         });
 
         const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'The model layout engine was unable to break context.');
+        if (!response.ok) throw new Error(data.error || 'Failed to sync schedule metadata metrics.');
 
-        renderAdvancedSportsbookLayout(data);
+        buildRaceButtons(dateVal, data.races || []);
       } catch (err) {
-        errorBox.textContent = `SYSTEM FAILURE LOG: ${err.message}`;
+        errorBox.textContent = `CALENDAR TIMEOUT REPORT: ${err.message}`;
         errorBox.classList.remove('hidden');
       } finally {
         loading.classList.add('hidden');
       }
     });
+
+    // BUILD CHIPS WITH RACE TIMES INTEGRATED
+    function buildRaceButtons(dateStr, racesList) {
+      raceChips.innerHTML = '';
+      if(racesList.length === 0) {
+        raceChips.innerHTML = `<span class="text-xs text-zinc-650 font-mono col-span-full">No official card schedule entries verified on this day.</span>`;
+      } else {
+        racesList.forEach(race => {
+          const btn = document.createElement('button');
+          btn.className = "bg-black border border-zinc-900 hover:border-lime-500 text-left p-2.5 rounded transition-all flex flex-col justify-between group";
+          
+          btn.innerHTML = `
+            <span class="mono text-[9px] font-bold text-lime-400/80 group-hover:text-lime-400 uppercase tracking-tight">${race.time || 'TBD'}</span>
+            <span class="font-black text-xs text-zinc-300 group-hover:text-white uppercase mt-0.5">${race.name}</span>
+          `;
+          
+          btn.addEventListener('click', () => executeAutomatedRaceAnalysis(dateStr, race.name));
+          raceChips.appendChild(btn);
+        });
+      }
+      scheduleContainer.classList.remove('hidden');
+    }
+
+    // TARGETED DEEP ENGINE INFERENCE TRIPS
+    async function executeAutomatedRaceAnalysis(dateStr, raceName) {
+      errorBox.classList.add('hidden');
+      results.classList.add('hidden');
+      
+      loadingText.textContent = `LAUNCHING GROUNDED INTERNET CRAWL FOR ${raceName.toUpperCase()} ON ${dateStr.toUpperCase()}...`;
+      loading.classList.remove('hidden');
+
+      try {
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'analyze_race', date: dateStr, race: raceName })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'The backend failed to isolate the targeted race parameters.');
+
+        renderAdvancedSportsbookLayout(data);
+      } catch (err) {
+        errorBox.textContent = `TARGET PROCESSING FAULT: ${err.message}`;
+        errorBox.classList.remove('hidden');
+      } finally {
+        loading.classList.add('hidden');
+      }
+    }
 
     function renderAdvancedSportsbookLayout(data) {
       document.getElementById('res-title').textContent = data.raceName;
@@ -227,20 +282,17 @@
       const runners = data.analysis.runners || [];
       runners.sort((a, b) => b.winProbability - a.winProbability);
 
-      // --- TIER 1: ABSOLUTE SAFEST COVERS PANEL (AUTOMATED TO USE VEGAS COVERS) ---
+      // --- TIER 1: ABSOLUTE SAFEST COVERS PANEL ---
       const safestContainer = document.getElementById('safest-container');
       safestContainer.innerHTML = '';
-      
       const topSafetyRunners = [...runners].slice(0, 3);
       
       if (topSafetyRunners.length === 0) {
-        safestContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">Insufficient dataset criteria.</p>`;
+        safestContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">Insufficient data.</p>`;
       } else {
         topSafetyRunners.forEach(horse => {
           const div = document.createElement('div');
           div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
-          
-          // Calculate Place probability conversion multiplier
           const placeSafetyFactor = Math.min(98, Math.round(horse.winProbability * 2.1));
           
           div.innerHTML = `
@@ -252,7 +304,7 @@
               <span class="mono text-[10px] text-lime-400 font-black">${placeSafetyFactor}% Place Cover</span>
             </div>
             <div class="text-[10px] text-zinc-400"><span class="text-lime-500 font-bold">MARKET LINE:</span> ${cleanAndConvertOdds(horse.hkjcOdds)} Place Line</div>
-            <p class="text-[9px] text-zinc-600 leading-tight">Safety fallback shifting ${horse.winProbability}% Win capacity to safeguard Top 3 podium placement.</p>
+            <p class="text-[9px] text-zinc-600 leading-tight">Safety fallback protecting podium placement layout chains.</p>
           `;
           safestContainer.appendChild(div);
         });
@@ -267,7 +319,6 @@
         guaranteedContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No locks detected.</p>`;
       } else {
         stablePlays.slice(0, 3).forEach(play => {
-          // Look up current decimal odds from runners list for safety converting
           const linkedHorse = runners.find(h => h.horseNumber === play.horseNumber);
           const computedVegasOdds = linkedHorse ? cleanAndConvertOdds(linkedHorse.hkjcOdds) : cleanAndConvertOdds(play.vegasOdds);
 
@@ -294,7 +345,7 @@
       const upsetPlays = data.analysis.top5Upsets || [];
       
       if (upsetPlays.length === 0) {
-        upsetsContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No matrix inefficiencies computed.</p>`;
+        upsetsContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No inefficiencies computed.</p>`;
       } else {
         upsetPlays.slice(0, 3).forEach(play => {
           const linkedHorse = runners.find(h => h.horseNumber === play.horseNumber);
@@ -317,7 +368,7 @@
         });
       }
 
-      // --- POPULATE MAIN DATA LINES TABLE ---
+      // --- POPULATE MAIN CORE PERFORMANCE DATASHEET MATRIX ---
       const tbody = document.getElementById('runners-rows');
       tbody.innerHTML = '';
 
