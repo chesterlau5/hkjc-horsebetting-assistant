@@ -3,145 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HKJC AI Betting Powerhouse</title>
+  <title>QUANTUM SPORTSBOOK ENGINE</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #000000; }
     .mono { font-family: 'JetBrains Mono', monospace; }
   </style>
 </head>
-<body class="bg-[#09090b] text-zinc-100 min-h-screen antialiased selection:bg-orange-500/30">
+<body class="text-zinc-100 min-h-screen antialiased selection:bg-lime-500/30">
 
-  <div class="max-w-7xl mx-auto p-4 md:p-8 space-y-8">
+  <div class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
     
-    <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-800 pb-6 gap-4">
+    <!-- Sharp Sportsbook Header -->
+    <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-900 pb-5 gap-4">
       <div>
-        <div class="flex items-center gap-2.5">
-          <span class="inline-flex items-center gap-1.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 text-[10px] font-extrabold px-2.5 py-0.5 rounded-md uppercase tracking-wider">
-            <span class="h-1.5 w-1.5 rounded-full bg-orange-500 animate-pulse"></span>
-            Quant Analytics v3.2
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center gap-1 bg-lime-500/10 text-lime-400 border border-lime-500/20 text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider">
+            <span class="h-1.5 w-1.5 rounded-full bg-lime-500"></span>
+            LIVE QUANT MATRIX v4.0
           </span>
         </div>
-        <h1 class="text-3xl font-extrabold tracking-tight mt-2 text-white">
-          HKJC <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-400">BETTING POWERHOUSE</span>
+        <h1 class="text-2xl font-black tracking-tight mt-1 text-white uppercase">
+          HKJC // <span class="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-400">Quantum Betting Terminal</span>
         </h1>
       </div>
-      <div class="text-left sm:text-right font-mono text-[11px] text-zinc-500 space-y-0.5">
-        <p>MODEL // GEMINI-2.5-FLASH.GROUNDED</p>
-        <p>WORKSPACE // SECURE BACKEND PROXY</p>
+      <div class="text-left sm:text-right font-mono text-[10px] text-zinc-600 space-y-0.5">
+        <p>SYSTEM INFERENCE // GEMINI.FLASH</p>
+        <p>ODDS ENGINE // AMERICAN MONEYLINE OVERRIDE</p>
       </div>
     </header>
 
-    <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl p-5 shadow-sm backdrop-blur-md">
-      <div class="flex items-center justify-between mb-3">
-        <label class="text-xs font-bold text-zinc-400 uppercase tracking-wider">Race Card Context Matrix</label>
-        <span class="text-[11px] text-zinc-500 font-mono">UTF-8 RAW PAYLOAD</span>
+    <!-- Raw Context Input Window -->
+    <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4">
+      <div class="flex items-center justify-between mb-2">
+        <label class="text-[10px] font-black text-zinc-500 uppercase tracking-wider">Race Card Source Payload</label>
+        <span class="text-[10px] text-zinc-600 font-mono">SECURE AGGREGATOR</span>
       </div>
-      <textarea id="input-text" rows="4" placeholder="Select All (Ctrl+A) -> Copy -> Paste full HKJC portal raw text data page here..." 
-                class="w-full bg-zinc-950/60 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-zinc-300 font-mono focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/30 transition-all placeholder-zinc-700 resize-none"></textarea>
+      <textarea id="input-text" rows="3" placeholder="Paste full HKJC portal raw text data page here..." 
+                class="w-full bg-black border border-zinc-900 rounded-md px-3 py-2 text-xs text-zinc-300 font-mono focus:outline-none focus:border-lime-500/50 transition-all placeholder-zinc-800 resize-none"></textarea>
       
-      <div class="mt-4 flex justify-end">
-        <button id="btn-submit" class="w-full sm:w-auto bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-zinc-950 font-extrabold px-6 py-3 rounded-lg shadow-lg shadow-orange-500/10 active:scale-[0.99] transition-all uppercase tracking-wider text-xs">
-          Run Quantum Engine
+      <div class="mt-3 flex justify-end">
+        <button id="btn-submit" class="w-full sm:w-auto bg-gradient-to-r from-lime-500 to-emerald-500 hover:from-lime-600 hover:to-emerald-600 text-black font-black px-5 py-2.5 rounded text-xs uppercase tracking-wider transition-all active:scale-[0.99]">
+          Execute System Inferences
         </button>
       </div>
     </div>
 
-    <div id="loading" class="hidden text-center py-16 bg-zinc-900/20 border border-zinc-800/50 rounded-xl">
-      <div class="inline-block animate-spin rounded-full h-8 w-8 border-2 border-t-orange-500 border-zinc-800 mb-3"></div>
-      <p class="text-xs font-mono tracking-widest text-zinc-400 uppercase">Parsing Live Web Consensus & Implied Probabilities</p>
+    <!-- Sporty Inline Loader -->
+    <div id="loading" class="hidden text-center py-12 bg-zinc-950 border border-zinc-900 rounded-lg">
+      <div class="inline-block animate-spin rounded-full h-6 w-6 border-2 border-t-lime-400 border-zinc-900 mb-2"></div>
+      <p class="text-[10px] font-mono tracking-widest text-zinc-500 uppercase">Calculating implied probabilities and sports-line spreads...</p>
     </div>
 
-    <div id="error-box" class="hidden bg-red-950/20 border border-red-900/50 text-red-400 p-4 rounded-xl font-mono text-xs"></div>
+    <!-- Error Diagnostics -->
+    <div id="error-box" class="hidden bg-red-950/30 border border-red-900 text-red-400 p-4 rounded-lg font-mono text-xs"></div>
 
-    <main id="results" class="hidden space-y-6 animate-fade-in">
+    <!-- PRIMARY DASHBOARD DISPLAY -->
+    <main id="results" class="hidden space-y-6">
       
-      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <!-- Race Info Header Strip -->
+      <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 id="res-title" class="text-xl font-extrabold text-white tracking-tight">Race Identity</h2>
-          <p id="res-date" class="text-xs font-mono text-orange-400 mt-1 uppercase">Date Stamp</p>
+          <h2 id="res-title" class="text-lg font-black text-white tracking-tight uppercase">Race Matrix</h2>
+          <p id="res-date" class="text-[10px] font-mono text-lime-400 mt-0.5 tracking-wider">TIMESTAMP</p>
         </div>
-        <div class="flex items-center gap-3 bg-zinc-950 border border-zinc-800 px-4 py-2 rounded-lg">
-          <div class="text-left">
-            <span class="block text-[9px] uppercase font-bold text-zinc-500 tracking-wider">TRACK SCENARIO</span>
-            <span id="res-track" class="text-xs font-extrabold text-emerald-400">GOOD</span>
-          </div>
+        <div class="bg-black border border-zinc-900 px-3 py-1.5 rounded flex flex-col">
+          <span class="text-[8px] uppercase font-black text-zinc-650 tracking-wider">TRACK STATUS</span>
+          <span id="res-track" class="text-xs font-black text-lime-400">GOOD</span>
         </div>
       </div>
 
-      <div class="bg-zinc-900/60 border border-zinc-800 rounded-xl p-5">
-        <h3 class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-2">Macro Bias & Pace Analysis Matrix</h3>
-        <p id="res-summary" class="text-zinc-300 text-xs leading-relaxed"></p>
+      <!-- Tactical Summary Statement -->
+      <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4">
+        <span class="text-[9px] font-black uppercase tracking-wider text-zinc-500 block mb-1.5">Pace Bias Matrix Analysis</span>
+        <p id="res-summary" class="text-zinc-400 text-xs leading-relaxed font-medium"></p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 shadow-md flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-4 border-b border-zinc-800 pb-2.5">
-              <h3 class="text-xs font-extrabold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
-                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                Top 5 High-Stability Cash Selections
-              </h3>
-              <span class="text-[9px] font-mono bg-emerald-500/10 text-emerald-400 font-bold px-2 py-0.5 rounded border border-emerald-500/20 uppercase">STABLE REVENUE</span>
-            </div>
-            <div id="guaranteed-container" class="space-y-2.5">
+      <!-- THREE-TIER SELECTION ARCHITECTURE -->
+      <div>
+        <span class="text-[9px] font-black uppercase tracking-wider text-zinc-500 block mb-2.5">Targeted Play Classifications</span>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          
+          <!-- TIER 1: ABSOLUTE SAFEST COVERS (PLACE/SHOW) -->
+          <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col justify-between border-t-2 border-t-lime-500">
+            <div>
+              <div class="flex items-center justify-between mb-3 pb-2 border-b border-zinc-900">
+                <h3 class="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
+                  <span class="h-1.5 w-1.5 rounded-full bg-lime-500"></span>
+                  Absolute Safest Covers
+                </h3>
+                <span class="text-[8px] font-mono font-bold text-lime-400 bg-lime-500/10 px-1.5 py-0.5 rounded border border-lime-500/20">LOW VARIANCE</span>
               </div>
-          </div>
-        </div>
-
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 shadow-md flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-4 border-b border-zinc-800 pb-2.5">
-              <h3 class="text-xs font-extrabold text-indigo-400 uppercase tracking-wider flex items-center gap-2">
-                <span class="h-2 w-2 rounded-full bg-indigo-500"></span>
-                Top 5 High-Multiplier Upset Targets
-              </h3>
-              <span class="text-[9px] font-mono bg-indigo-500/10 text-indigo-400 font-bold px-2 py-0.5 rounded border border-indigo-500/20 uppercase">HIGH MULTIPLIER</span>
-            </div>
-            <div id="upsets-container" class="space-y-2.5">
+              <div id="safest-container" class="space-y-2">
+                <!-- Calculated dynamically from top probability runners -->
               </div>
+            </div>
           </div>
-        </div>
 
+          <!-- TIER 2: HIGH-STABILITY REVENUE -->
+          <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col justify-between border-t-2 border-t-emerald-500">
+            <div>
+              <div class="flex items-center justify-between mb-3 pb-2 border-b border-zinc-900">
+                <h3 class="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
+                  <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  High-Stability Revenue
+                </h3>
+                <span class="text-[8px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">STABLE VALUE</span>
+              </div>
+              <div id="guaranteed-container" class="space-y-2">
+                <!-- Injected from backend -->
+              </div>
+            </div>
+          </div>
+
+          <!-- TIER 3: HIGH-MULTIPLIER UPSETS -->
+          <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col justify-between border-t-2 border-t-indigo-500">
+            <div>
+              <div class="flex items-center justify-between mb-3 pb-2 border-b border-zinc-900">
+                <h3 class="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
+                  <span class="h-1.5 w-1.5 rounded-full bg-indigo-500"></span>
+                  High-Multiplier Upsets
+                </h3>
+                <span class="text-[8px] font-mono font-bold text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20">CALCULATED RISK</span>
+              </div>
+              <div id="upsets-container" class="space-y-2">
+                <!-- Injected from backend -->
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
 
-      <div class="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-sm">
-        <div class="px-5 py-4 border-b border-zinc-800 bg-zinc-950 flex justify-between items-center">
-          <h3 class="text-xs font-extrabold text-zinc-300 uppercase tracking-wider">Core Field Probability Engine</h3>
-          <span class="font-mono text-[10px] text-zinc-500">SORTED BY HIGHEST WIN PROBABILITY</span>
+      <!-- MAIN CORE PERFORMANCE SPREADSHEET -->
+      <div class="bg-zinc-950 border border-zinc-900 rounded-lg overflow-hidden">
+        <div class="px-4 py-3 border-b border-zinc-900 bg-black flex justify-between items-center">
+          <h3 class="text-xs font-black text-zinc-400 uppercase tracking-wider">Advanced Data-Line Matrix</h3>
+          <span class="font-mono text-[9px] text-zinc-600">SORTED BY IMPLIED WIN PROBABILITY DESC</span>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse whitespace-nowrap">
             <thead>
-              <tr class="border-b border-zinc-800 text-[10px] font-bold text-zinc-500 uppercase bg-zinc-950/50">
-                <th class="py-3 px-4 text-center w-12">#</th>
-                <th class="py-3 px-4">Runner Profile</th>
-                <th class="py-3 px-4 text-center">HKJC Dec</th>
-                <th class="py-3 px-4 text-center">Vegas Moneyline</th>
-                <th class="py-3 px-4 text-center">Odds Value Chart Indicator</th>
-                <th class="py-3 px-4">Implied Win Probability</th>
-                <th class="py-3 px-4 text-center">Quant Score</th>
-                <th class="py-3 px-4 text-center">Sentiment</th>
+              <tr class="border-b border-zinc-900 text-[9px] font-black text-zinc-500 uppercase bg-black">
+                <th class="py-2.5 px-4 text-center w-12">Gate</th>
+                <th class="py-2.5 px-4">Runner Breakdown</th>
+                <th class="py-2.5 px-4 text-center">Vegas Line (+/-)</th>
+                <th class="py-2.5 px-4 text-center">HKJC Decimal</th>
+                <th class="py-2.5 px-4 text-center">Odds Discrepancy Chart</th>
+                <th class="py-2.5 px-4">Implied Win Prob</th>
+                <th class="py-2.5 px-4 text-center">Quant Rating</th>
+                <th class="py-2.5 px-4 text-center">Sentiment</th>
               </tr>
             </thead>
-            <tbody id="runners-rows" class="divide-y divide-zinc-800 bg-zinc-900/20">
-              </tbody>
+            <tbody id="runners-rows" class="divide-y divide-zinc-900 bg-black/40">
+              <!-- Dynamically populated rows -->
+            </tbody>
           </table>
         </div>
       </div>
 
+      <!-- EXOTIC SPECULATIVE SYSTEMS COMBOS -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col justify-between">
-          <div class="text-[10px] font-mono font-bold text-orange-400 uppercase tracking-widest mb-1.5">Suggested Quinella Matrix Base</div>
-          <p id="exotic-quinella" class="text-zinc-200 text-xs font-medium font-mono"></p>
+        <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4">
+          <div class="text-[9px] font-mono font-black text-lime-400 uppercase tracking-widest mb-1 border-b border-zinc-900 pb-1">Quinella Exotics Formula Base</div>
+          <p id="exotic-quinella" class="text-zinc-300 text-xs font-bold font-mono pt-1"></p>
         </div>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col justify-between">
-          <div class="text-[10px] font-mono font-bold text-red-400 uppercase tracking-widest mb-1.5">Suggested Tierce Direct Combos</div>
-          <p id="exotic-tierce" class="text-zinc-200 text-xs font-medium font-mono"></p>
+        <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4">
+          <div class="text-[9px] font-mono font-black text-emerald-400 uppercase tracking-widest mb-1 border-b border-zinc-900 pb-1">Tierce Combos Exact Order Blueprint</div>
+          <p id="exotic-tierce" class="text-zinc-300 text-xs font-bold font-mono pt-1"></p>
         </div>
       </div>
 
@@ -154,12 +186,22 @@
     const errorBox = document.getElementById('error-box');
     const results = document.getElementById('results');
 
+    // Robust Odds Standardizer Helper to force explicit +/- signs on everything American Moneyline
+    function formatAmericanOdds(oddsStr) {
+      if (!oddsStr) return 'EVEN';
+      let clean = oddsStr.toString().trim();
+      if (clean.startsWith('+') || clean.startsWith('-')) return clean;
+      let num = parseFloat(clean);
+      if (!isNaN(num) && num > 0) return `+${num}`;
+      return clean;
+    }
+
     btnSubmit.addEventListener('click', async () => {
       errorBox.classList.add('hidden');
       results.classList.add('hidden');
       
       const textValue = document.getElementById('input-text').value.trim();
-      if (!textValue) return alert('Please input valid raw page context before running analytics.');
+      if (!textValue) return alert('Invalid entry. Provide raw race-card text compilation data first.');
 
       loading.classList.remove('hidden');
 
@@ -171,147 +213,169 @@
         });
 
         const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'The system could not parse the raw layout text.');
+        if (!response.ok) throw new Error(data.error || 'The model layout engine was unable to break context.');
 
-        renderPowerhouseDashboard(data);
+        renderAdvancedSportsbookLayout(data);
       } catch (err) {
-        errorBox.textContent = `CRITICAL FAILURE REPORT: ${err.message}`;
+        errorBox.textContent = `SYSTEM FAILURE LOG: ${err.message}`;
         errorBox.classList.remove('hidden');
       } finally {
         loading.classList.add('hidden');
       }
     });
 
-    function renderPowerhouseDashboard(data) {
+    function renderAdvancedSportsbookLayout(data) {
       document.getElementById('res-title').textContent = data.raceName;
       document.getElementById('res-date').textContent = data.date;
-      document.getElementById('res-track').textContent = data.trackCondition || 'Good';
+      document.getElementById('res-track').textContent = data.trackCondition || 'Good / Firm';
       document.getElementById('res-summary').textContent = data.analysis.summary;
 
-      document.getElementById('exotic-quinella').textContent = data.analysis.exoticBetSuggestions?.quinella || 'Data parsing inconclusive.';
-      document.getElementById('exotic-tierce').textContent = data.analysis.exoticBetSuggestions?.tierce || 'Data parsing inconclusive.';
+      document.getElementById('exotic-quinella').textContent = data.analysis.exoticBetSuggestions?.quinella || 'No clear optimized alignment matches computed.';
+      document.getElementById('exotic-tierce').textContent = data.analysis.exoticBetSuggestions?.tierce || 'No clear exact alignment chains computed.';
 
-      // RENDER SECTION 1: STABLE CASH PLAYS PANEL
+      const runners = data.analysis.runners || [];
+      runners.sort((a, b) => b.winProbability - a.winProbability);
+
+      // --- DYNAMICALLY COMPUTE AND POPULATE NEW TIER 1: ABSOLUTE SAFEST COVERS PANEL ---
+      const safestContainer = document.getElementById('safest-container');
+      safestContainer.innerHTML = '';
+      
+      // Filter out top 3 runners based on pure win probability weight for coverage safety conversion
+      const topSafetyRunners = [...runners].slice(0, 3);
+      
+      if (topSafetyRunners.length === 0) {
+        safestContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">Insufficient dataset criteria for calculations.</p>`;
+      } else {
+        topSafetyRunners.forEach(horse => {
+          const div = document.createElement('div');
+          div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
+          
+          // Place probability conversion estimation formula (Win Probability amplified to model safe placement coverage)
+          const placeSafetyFactor = Math.min(98, Math.round(horse.winProbability * 2.1));
+          
+          div.innerHTML = `
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="mono text-[9px] font-black bg-lime-500/10 text-lime-400 border border-lime-500/20 px-1 py-0.5 rounded">#${horse.horseNumber}</span>
+                <span class="font-extrabold text-xs text-zinc-150">${horse.horseName}</span>
+              </div>
+              <span class="mono text-[10px] text-lime-400 font-black">${placeSafetyFactor}% Place Cover</span>
+            </div>
+            <div class="text-[10px] text-zinc-400"><span class="text-lime-500 font-bold">MARKET PLAY:</span> Place / Show Bet (Top 3 Cover Strategy)</div>
+            <p class="text-[9px] text-zinc-600 leading-tight">Calculated mitigation strategy down-shifts ${horse.winProbability}% Win capacity to maximize parlay leg protection.</p>
+          `;
+          safestContainer.appendChild(div);
+        });
+      }
+
+      // --- POPULATE TIER 2: HIGH-STABILITY CASH PLAYS ---
       const guaranteedContainer = document.getElementById('guaranteed-container');
       guaranteedContainer.innerHTML = '';
       const stablePlays = data.analysis.top5Guaranteed || [];
       
-      if(stablePlays.length === 0) {
-        guaranteedContainer.innerHTML = `<p class="text-xs font-mono text-zinc-500 py-2">No definitive consensus safety plays computed.</p>`;
+      if (stablePlays.length === 0) {
+        guaranteedContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No definitive safety locks detected in field variance.</p>`;
       } else {
-        stablePlays.forEach(play => {
+        stablePlays.slice(0, 3).forEach(play => { // Slice to 3 to keep layout beautifully unified across grid
           const div = document.createElement('div');
-          div.className = "bg-zinc-950 border border-zinc-800 rounded-lg p-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 transition-all hover:border-zinc-700";
+          div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
           div.innerHTML = `
-            <div class="space-y-0.5">
-              <div class="flex items-center gap-2">
-                <span class="mono text-[10px] font-extrabold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded">#${play.horseNumber}</span>
-                <span class="font-bold text-xs text-zinc-100">${play.horseName}</span>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="mono text-[9px] font-black bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1 py-0.5 rounded">#${play.horseNumber}</span>
+                <span class="font-extrabold text-xs text-zinc-150">${play.horseName}</span>
               </div>
-              <p class="text-[11px] text-zinc-400"><span class="text-emerald-500 font-bold">BET:</span> ${play.recommendedBet}</p>
-              <p class="text-[10px] text-zinc-500 leading-tight">${play.executionStrategy}</p>
+              <span class="mono text-[10px] text-emerald-400 font-bold">${formatAmericanOdds(play.vegasOdds)}</span>
             </div>
-            <div class="text-left sm:text-right flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto border-t border-zinc-900 sm:border-0 pt-2 sm:pt-0">
-              <span class="mono text-xs font-bold text-zinc-400">${play.vegasOdds}</span>
-              <span class="mono text-xs font-extrabold text-emerald-400">${play.winProbability}% Prob</span>
-            </div>
+            <div class="text-[10px] text-zinc-400"><span class="text-emerald-500 font-bold">MARKET PLAY:</span> ${play.recommendedBet}</div>
+            <p class="text-[9px] text-zinc-600 leading-tight truncate">${play.executionStrategy}</p>
           `;
           guaranteedContainer.appendChild(div);
         });
       }
 
-      // RENDER SECTION 2: HIGH-VALUED UPSETS PANEL
+      // --- POPULATE TIER 3: HIGH-MULTIPLIER UPSETS ---
       const upsetsContainer = document.getElementById('upsets-container');
       upsetsContainer.innerHTML = '';
       const upsetPlays = data.analysis.top5Upsets || [];
       
-      if(upsetPlays.length === 0) {
-        upsetsContainer.innerHTML = `<p class="text-xs font-mono text-zinc-500 py-2">No mathematically viable calculated risk upsets detected.</p>`;
+      if (upsetPlays.length === 0) {
+        upsetsContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No explosive matrix inefficiencies computed in tracking model.</p>`;
       } else {
-        upsetPlays.forEach(play => {
+        upsetPlays.slice(0, 3).forEach(play => { // Slice to 3 to keep grid dimensions flawless
           const div = document.createElement('div');
-          div.className = "bg-zinc-950 border border-zinc-800 rounded-lg p-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 transition-all hover:border-zinc-700";
+          div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
           div.innerHTML = `
-            <div class="space-y-0.5">
-              <div class="flex items-center gap-2">
-                <span class="mono text-[10px] font-extrabold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-1.5 py-0.5 rounded">#${play.horseNumber}</span>
-                <span class="font-bold text-xs text-zinc-100">${play.horseName}</span>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="mono text-[9px] font-black bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-1 py-0.5 rounded">#${play.horseNumber}</span>
+                <span class="font-extrabold text-xs text-zinc-150">${play.horseName}</span>
               </div>
-              <p class="text-[11px] text-zinc-400"><span class="text-indigo-400 font-bold">BET:</span> ${play.recommendedBet}</p>
-              <p class="text-[10px] text-zinc-500 leading-tight">${play.upsetTrigger}</p>
+              <span class="mono text-[10px] text-amber-400 font-black">${formatAmericanOdds(play.vegasOdds)}</span>
             </div>
-            <div class="text-left sm:text-right flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto border-t border-zinc-900 sm:border-0 pt-2 sm:pt-0">
-              <span class="mono text-xs font-black text-amber-500">${play.vegasOdds}</span>
-              <span class="mono text-xs font-bold text-indigo-400">${play.winProbability}% Prob</span>
-            </div>
+            <div class="text-[10px] text-zinc-400"><span class="text-indigo-400 font-bold">MARKET PLAY:</span> ${play.recommendedBet}</div>
+            <p class="text-[9px] text-zinc-600 leading-tight truncate">${play.upsetTrigger}</p>
           `;
           upsetsContainer.appendChild(div);
         });
       }
 
-      // RENDER MAIN ADVANCED DATASHEET ROWS
+      // --- POPULATE MAIN PERFORMANCE DATASHEET MATRIX ---
       const tbody = document.getElementById('runners-rows');
       tbody.innerHTML = '';
 
-      const runners = data.analysis.runners || [];
-      runners.sort((a, b) => b.winProbability - a.winProbability);
-
       runners.forEach(horse => {
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-zinc-800/20 transition-colors group";
+        tr.className = "hover:bg-zinc-950 transition-colors group";
 
-        // Sentiment badge aesthetics
-        let sentimentClass = "bg-zinc-800 text-zinc-500";
-        if (horse.expertSentiment === 'Bullish') sentimentClass = "bg-emerald-500/10 text-emerald-400 border border-emerald-500/10";
-        if (horse.expertSentiment === 'Bearish') sentimentClass = "bg-red-500/10 text-red-400 border border-red-500/10";
+        let sentimentClass = "bg-zinc-900 text-zinc-600";
+        if (horse.expertSentiment === 'Bullish') sentimentClass = "bg-lime-500/10 text-lime-400 border border-lime-500/20";
+        if (horse.expertSentiment === 'Bearish') sentimentClass = "bg-red-500/10 text-red-400 border border-red-500/20";
 
-        // TRAFFIC-LIGHT SPECTRUM ODDS VISUAL CHART (Clean inline meter graphs instead of raw ugly words)
+        // Traffic-Light Spread Meters instead of clunky text blocks
         let visualChartHtml = '';
         if (horse.oddsValue === 'Good') {
           visualChartHtml = `
-            <div class="flex flex-col items-center justify-center space-y-1">
+            <div class="flex flex-col items-center justify-center space-y-0.5">
               <div class="flex space-x-0.5 items-center justify-center">
-                <span class="h-1.5 w-3 rounded-sm bg-zinc-800"></span>
-                <span class="h-1.5 w-3 rounded-sm bg-zinc-800"></span>
-                <span class="h-2.5 w-4 rounded-sm bg-emerald-500 shadow-sm shadow-emerald-500/30 animate-pulse"></span>
+                <span class="h-1 w-2 rounded-sm bg-zinc-900"></span>
+                <span class="h-1.5 w-3 rounded-sm bg-lime-500 shadow-sm shadow-lime-500/20"></span>
               </div>
-              <span class="text-[9px] mono font-bold text-emerald-400 uppercase tracking-widest">VALUE ZONE</span>
+              <span class="text-[8px] mono font-bold text-lime-400 tracking-wider">VALUE LINE</span>
             </div>
           `;
         } else {
           visualChartHtml = `
-            <div class="flex flex-col items-center justify-center space-y-1">
+            <div class="flex flex-col items-center justify-center space-y-0.5">
               <div class="flex space-x-0.5 items-center justify-center">
-                <span class="h-2.5 w-4 rounded-sm bg-red-500 shadow-sm shadow-red-500/30"></span>
-                <span class="h-1.5 w-3 rounded-sm bg-zinc-800"></span>
-                <span class="h-1.5 w-3 rounded-sm bg-zinc-800"></span>
+                <span class="h-1.5 w-3 rounded-sm bg-red-500/80"></span>
+                <span class="h-1 w-2 rounded-sm bg-zinc-900"></span>
               </div>
-              <span class="text-[9px] mono font-bold text-red-500 uppercase tracking-widest">OVERPRICED</span>
+              <span class="text-[8px] mono font-bold text-red-500/80 tracking-wider">OVERPRICED</span>
             </div>
           `;
         }
 
         tr.innerHTML = `
-          <td class="py-3 px-4 text-center mono font-extrabold text-xs text-zinc-500 bg-zinc-950/20">${horse.horseNumber}</td>
-          <td class="py-3 px-4">
-            <div class="font-bold text-sm text-zinc-100 group-hover:text-orange-400 transition-colors">${horse.horseName}</div>
-            <div class="text-[10px] text-zinc-400 mt-0.5 truncate max-w-xs"><span class="text-orange-400 font-medium">Edge:</span> ${horse.keyEdge}</div>
-            <div class="text-[10px] text-zinc-500 truncate max-w-xs"><span class="text-red-400 font-medium">Risk:</span> ${horse.riskFactor}</div>
+          <td class="py-2.5 px-4 text-center mono font-black text-xs text-zinc-600 bg-black/60">${horse.horseNumber}</td>
+          <td class="py-2.5 px-4">
+            <div class="font-black text-xs text-zinc-200 group-hover:text-lime-400 transition-colors">${horse.horseName}</div>
+            <div class="text-[9px] text-zinc-500 max-w-xs truncate"><span class="text-zinc-400 font-bold">Edge:</span> ${horse.keyEdge}</div>
           </td>
-          <td class="py-3 px-4 text-center mono text-xs font-bold text-amber-400">${horse.hkjcOdds}</td>
-          <td class="py-3 px-4 text-center mono text-xs font-black text-zinc-300">${horse.vegasOdds}</td>
-          <td class="py-3 px-4 text-center">${visualChartHtml}</td>
-          <td class="py-3 px-4">
-            <div class="flex items-center space-x-2.5">
-              <span class="text-xs mono font-black text-white w-9">${horse.winProbability}%</span>
-              <div class="w-20 bg-zinc-800 h-1.5 rounded overflow-hidden hidden sm:block">
-                <div class="bg-gradient-to-r from-orange-500 to-amber-500 h-1.5 rounded" style="width: ${horse.winProbability}%"></div>
+          <td class="py-2.5 px-4 text-center mono text-xs font-black text-white bg-zinc-950/20">${formatAmericanOdds(horse.vegasOdds)}</td>
+          <td class="py-2.5 px-4 text-center mono text-xs font-bold text-zinc-500">${horse.hkjcOdds}</td>
+          <td class="py-2.5 px-4 text-center">${visualChartHtml}</td>
+          <td class="py-2.5 px-4">
+            <div class="flex items-center space-x-2">
+              <span class="text-xs mono font-black text-zinc-100 w-8">${horse.winProbability}%</span>
+              <div class="w-16 bg-zinc-900 h-1 rounded overflow-hidden hidden sm:block">
+                <div class="bg-gradient-to-r from-lime-500 to-emerald-400 h-1 rounded" style="width: ${horse.winProbability}%"></div>
               </div>
             </div>
           </td>
-          <td class="py-3 px-4 text-center mono font-bold text-xs text-zinc-100">${horse.statisticalScore}<span class="text-zinc-600 text-[10px]">/100</span></td>
-          <td class="py-3 px-4 text-center">
-            <span class="px-2 py-0.5 rounded border text-[9px] font-bold uppercase tracking-wider ${sentimentClass}">
+          <td class="py-2.5 px-4 text-center mono font-extrabold text-xs text-zinc-300">${horse.statisticalScore}</td>
+          <td class="py-2.5 px-4 text-center">
+            <span class="px-1.5 py-0.5 rounded border text-[8px] font-black uppercase tracking-wider ${sentimentClass}">
               ${horse.expertSentiment}
             </span>
           </td>
