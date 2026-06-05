@@ -266,7 +266,6 @@
       
       if (errorMsg.includes("quota") || errorMsg.includes("Quota") || errorMsg.includes("limit") || errorMsg.includes("429")) {
         let regexSecondsMatch = errorMsg.match(/retry in ([\d.]+)s/i);
-        // Force a 15-second safety block so multiple sliding positions open up at once
         let calculatedLockDuration = regexSecondsMatch ? Math.ceil(parseFloat(regexSecondsMatch[1])) + 15 : 45;
         
         engageTerminalLockdown(calculatedLockDuration);
@@ -285,7 +284,7 @@
       Array.from(raceChips.getElementsByTagName('button')).forEach(chip => chip.disabled = true);
 
       let counterLeft = secondsDuration;
-      cooldownTimerText.innerHTML = `Engine rate limits saturated. Safe terminal release in <span class="text-white font-black font-mono">${counterLeft}s</span>. <span class="text-[10px] text-zinc-500 block sm:inline sm:ml-1">Allowing token windows to slide clear before releasing input blocks.</span>`;
+      cooldownTimerText.innerHTML = `Engine rate limits saturated. Safe terminal release in <span class="text-white font-black font-mono">${counterLeft}s</span>. <span class="text-[10px] text-zinc-500 block mt-0.5 sm:inline sm:ml-1">Allowing token windows to slide clear before releasing input blocks.</span>`;
 
       lockClockInterval = setInterval(() => {
         counterLeft--;
@@ -327,7 +326,7 @@
         generateRaceMeetingChips(targetedDateValue, dataPayload.races || []);
       } catch (err) {
         parseAndLockTerminal(err.message);
-      } finaly {
+      } finally {
         loading.classList.add('hidden');
       }
     });
@@ -380,7 +379,7 @@
         renderAdvancedSportsbookLayout(analyticalResult, dateString, raceTitleId, raceTimeMarker);
       } catch (err) {
         parseAndLockTerminal(err.message);
-      } finaly {
+      } finally {
         loading.classList.add('hidden');
       }
     }
@@ -414,7 +413,7 @@
         renderAdvancedSportsbookLayout(payloadData, "PASTED DATA CONTEXT", inferredRaceName, "CURRENT");
       } catch (err) {
         parseAndLockTerminal(err.message);
-      } finaly {
+      } finally {
         loading.classList.add('hidden');
       }
     });
@@ -463,7 +462,6 @@
         highProbabilityPicks.forEach(horse => {
           const blockElement = document.createElement('div');
           blockElement.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 hover:border-zinc-800 transition-all";
-          // Run calculations to estimate place safety factors
           const placementSafetyScalar = Math.min(98, Math.round(horse.winProbability * 2.1));
           
           blockElement.innerHTML = `
@@ -553,9 +551,9 @@
         if (horse.expertSentiment === 'Bullish') badgeStyleClasses = "bg-lime-500/10 text-lime-400 border-lime-500/20";
         if (horse.expertSentiment === 'Bearish') badgeStyleClasses = "bg-red-500/10 text-red-400 border-red-500/20";
 
-        let visualizationMeterHtml = '';
+        let visualMeterHtml = '';
         if (horse.oddsValue === 'Good' || horse.oddsValue === 'good') {
-          visualizationMeterHtml = `
+          visualMeterHtml = `
             <div class="flex flex-col items-center justify-center space-y-0.5">
               <div class="flex space-x-0.5 items-center justify-center">
                 <span class="h-1 w-2 rounded-sm bg-zinc-900"></span>
@@ -565,7 +563,7 @@
             </div>
           `;
         } else {
-          visualizationMeterHtml = `
+          visualMeterHtml = `
             <div class="flex flex-col items-center justify-center space-y-0.5">
               <div class="flex space-x-0.5 items-center justify-center">
                 <span class="h-1.5 w-3 rounded-sm bg-red-500/80 shadow-sm shadow-red-900/30"></span>
@@ -576,7 +574,7 @@
           `;
         }
 
-        trProbabilityInt = parseInt(horse.winProbability) || 0;
+        const trProbabilityInt = parseInt(horse.winProbability) || 0;
 
         rowElement.innerHTML = `
           <td class="py-2.5 px-4 text-center mono font-black text-xs text-zinc-600 bg-black/40">${horse.horseNumber}</td>
@@ -586,7 +584,7 @@
           </td>
           <td class="py-2.5 px-4 text-center mono text-xs font-black text-white bg-zinc-950/40">${cleanAndConvertOdds(horse.hkjcOdds)}</td>
           <td class="py-2.5 px-4 text-center mono text-xs font-bold text-zinc-500">${horse.hkjcOdds}</td>
-          <td class="py-2.5 px-4 text-center">${visualizationMeterHtml}</td>
+          <td class="py-2.5 px-4 text-center">${visualMeterHtml}</td>
           <td class="py-2.5 px-4">
             <div class="flex items-center space-x-2">
               <span class="text-xs mono font-black text-zinc-100 w-8">${trProbabilityInt}%</span>
