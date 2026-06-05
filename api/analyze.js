@@ -1,4 +1,5 @@
 export default async function handler(req, res) {
+  // Enforce precise HTTP POST methods
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -6,94 +7,100 @@ export default async function handler(req, res) {
   try {
     const { action, date, race, rawText } = req.body;
     const geminiApiKey = process.env.GEMINI_API_KEY;
+    
     if (!geminiApiKey) {
-      return res.status(500).json({ error: 'Missing API Key configuration.' });
+      return res.status(500).json({ error: 'System Configuration Error: Missing GEMINI_API_KEY environment variable on server.' });
     }
 
     const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`;
 
-    // ENGINE ACTION 1: FETCH SCHEDULED RACES + TIMES FOR A DATE
+    // ==========================================
+    // ACTION WORKFLOW 1: DYNAMIC TIMELINE SCHEDULE FETCHING
+    // ==========================================
     if (action === 'fetch_races') {
-      if (!date) return res.status(400).json({ error: 'Date is required.' });
+      if (!date) return res.status(400).json({ error: 'Target calculation parameter error: Date value missing.' });
       
-      const systemInstruction = `You are a horse racing schedule coordinator. Search the live web for the Hong Kong Jockey Club (HKJC) racing schedule on the specified date. Identify exactly how many races are scheduled for that specific race meeting and find their official scheduled post times (state time in HKT clearly, e.g., 1:00 PM HKT or 6:45 PM HKT).
-      CRITICAL: Start your response directly with the opening brace { and end with the closing brace }. Do not include conversational text.
-      Output strictly a JSON object matching this schema precisely:
+      const scheduleSystemInstruction = `You are an elite horse racing schedule coordinator. Search the live web for the official Hong Kong Jockey Club (HKJC) racing schedule and card listings on the specified date. Identify exactly how many races are scheduled for that specific race meeting and extract their official post times. State all times clearly in Hong Kong Time (HKT), e.g., "1:00 PM HKT" or "6:45 PM HKT".
+      
+      CRITICAL OUTPUT FORMAT CONTROL: You MUST start your response directly with the opening brace { and end precisely with the closing brace }. Do not include conversational sentences, commentary, or markdown code blocks like \`\`\`json.
+      
+      Output strictly a valid JSON object matching this schema precisely:
       {
         "races": [
-          { "name": "Race 1", "time": "1:00 PM HKT" }
+          { "name": "Race 1", "time": "1:00 PM HKT" },
+          { "name": "Race 2", "time": "1:30 PM HKT" }
         ]
       }`;
 
-      const promptText = `Search the live internet for the official HKJC race meeting schedule and race times on this date: ${date}. Return a clean list of all scheduled races along with their respective post times.`;
+      const schedulePrompt = `Search the live internet using your search tool for the official HKJC race meeting calendar, race card listings, and official post times on this exact date: ${date}. Output the structured race arrays immediately.`;
 
-      const geminiPayload = {
-        contents: [{ parts: [{ text: promptText }] }],
-        systemInstruction: { parts: [{ text: systemInstruction }] },
-        tools: [{ googleSearch: {} }],
+      const schedulePayload = {
+        contents: [{ parts: [{ text: schedulePrompt }] }],
+        systemInstruction: { parts: [{ text: scheduleSystemInstruction }] },
+        tools: [{ googleSearch: {} }], // Enable internet grounding search
         generationConfig: { temperature: 0.1 }
       };
 
-      const response = await fetch(geminiUrl, {
+      const apiResponse = await fetch(geminiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(geminiPayload)
+        body: JSON.stringify(schedulePayload)
       });
       
-      const data = await response.json();
+      const apiData = await apiResponse.json();
       
-      // FIX: Bubbles up Google's exact error message so the frontend shield can read it!
-      if (!response.ok) {
-        return res.status(response.status).json({ 
-          error: data.error?.message || 'Google live-search grounding engine timed out. Try again or switch to Manual Overdrive.' 
+      // Bubble raw API status codes up directly to activate frontend rate limit shields
+      if (!apiResponse.ok) {
+        return res.status(apiResponse.status).json({ 
+          error: apiData.error?.message || 'Google live-search grounding engine timed out or threw a rate exception.' 
         });
       }
       
-      let txt = data.candidates[0].content.parts[0].text;
+      let rawTextResult = apiData.candidates[0].content.parts[0].text;
       
-      const startIdx = txt.indexOf('{');
-      const endIdx = txt.lastIndexOf('}');
-      if (startIdx === -1 || endIdx === -1 || endIdx <= startIdx) {
-        return res.status(422).json({ error: `Live Search delayed. Fallback to Manual Overdrive Paste. Report: "${txt}"` });
+      // Deep Scan Extractor Shield
+      const startJsonIdx = rawTextResult.indexOf('{');
+      const endJsonIdx = rawTextResult.lastIndexOf('}');
+      if (startJsonIdx === -1 || endJsonIdx === -1 || endJsonIdx <= startJsonIdx) {
+        return res.status(422).json({ error: `Grounding Interface Delay: No structured data returned. Server explanation: "${rawTextResult}"` });
       }
       
-      txt = txt.substring(startIdx, endIdx + 1);
-      try {
-        return res.status(200).json(JSON.parse(txt));
-      } catch(e) {
-        return res.status(422).json({ error: "Schedule formatting error from server response metrics." });
-      }
+      rawTextResult = rawTextResult.substring(startJsonIdx, endJsonIdx + 1);
+      return res.status(200).json(JSON.parse(rawTextResult));
     }
 
-    // ENGINE ACTION 2: CONFIGURING PAYLOAD ROUTING FOR ANALYSIS MODES
-    let promptText = '';
-    let enableLiveWebSearch = false;
+    // ==========================================
+    // ACTION WORKFLOW 2: ADVANCED QUANT MATRIX PARSING
+    // ==========================================
+    let payloadPrompt = '';
+    let loadLiveCrawlTools = false;
 
     if (action === 'analyze_race') {
-      enableLiveWebSearch = true;
-      promptText = `Use your search tool to look up the official HKJC race card, runner details, recent expert tips, betting odds, public consensus, or trainer insights for ${race} on the race day of ${date}. Compile and populate the required JSON format based entirely on your live web findings. Ensure you fill top5Guaranteed with the highest safety/consensus plays and top5Upsets with high-payout calculated risks.`;
+      // Auto-Pilot Mode: Fire up live web scraping tools
+      loadLiveCrawlTools = true;
+      payloadPrompt = `Use your search tool to deep crawl the live web for the official HKJC race card listings, field metrics, runner statistics, expert tipster consensus panels, performance records, and current betting trends for ${race} on the race day of ${date}. Compile and format all data points into the requested schema configuration based entirely on your analytical findings. Ensure top5Guaranteed isolates the absolute highest-safety consensus plays, and top5Upsets maps realistic high-payout speculative calculations.`;
     } else {
-      enableLiveWebSearch = false;
+      // Manual Overdrive Mode: Completely disable live search tools to ensure instantaneous execution
+      loadLiveCrawlTools = false;
       if (!rawText || rawText.trim().length < 50) {
-        return res.status(400).json({ error: 'Manual input data payload is empty or too short.' });
+        return res.status(400).json({ error: 'Processing Fault: Manual text payload context window empty or too short.' });
       }
-      promptText = `You are given a raw copy-pasted text dump from an HKJC race page. Extract the data directly from this text context and populate the required JSON format immediately. Do not attempt to browse the internet. Rely strictly on this text: \n\n${rawText}`;
+      payloadPrompt = `You are given a raw copy-pasted data text dump from an official HKJC betting portal interface. Extract, parse, and structure all runner data from this provided context block into the requested data layout immediately. Do not browse the web; rely exclusively on this text payload: \n\n${rawText}`;
     }
 
-    const systemInstruction = `You are a high-stakes, elite quantitative horse racing analyst for Hong Kong racing. Your job is to process race data, calculate premium betting lines, and compile an aggressive, maximum-yield betting intelligence dashboard.
+    const quantSystemInstruction = `You are a high-stakes, elite quantitative horse racing handicapper and data analyst for Hong Kong racing circuits. Your task is to process race vectors, synthesize betting intelligence fields, and compile a maximum-yield sports betting layout matrix.
 
-    CRITICAL REQUIREMENT: You MUST populate EVERY single field in the JSON schema for EVERY runner found in the field. NEVER leave a field blank, null, generic, or missing. 
-    
-    If exact current live web odds or consensus metrics are not explicitly available for a runner, you are FORBIDDEN from outputting generic or placeholder metrics. You MUST execute an algorithmic estimation using your deep structural racing analytics knowledge to generate realistic, distinct data footprints:
-    1. "hkjcOdds": Must be a realistic decimal string representing their performance tier (e.g., "3.45", "7.20", "14.0"). NEVER leave them as a single repeating default value for the field.
-    2. "winProbability": Must be a clear calculated integer greater than 0 representing their win equity (e.g., 24, 15, 6). The total sum of all runners' win probabilities should approximate 100%.
-    3. "statisticalScore": Must be an individualized performance power-rating score from 1 to 100 based on class and form.
-    4. "expertSentiment": Must evaluate to "Bullish", "Bearish", or "Neutral" based on typical track profile parameters.
-    5. "oddsValue": Must explicitly evaluate to "Good" if the implied probability justifies the price, or "Bad" if overhyped.
-    6. "keyEdge" & "riskFactor": Must contain distinct, concise analytical sentences mapping their tactical situation.
+    CRITICAL DISPERSION DIRECTIVE: You MUST populate EVERY single parameter in the JSON mapping template for EVERY horse found in the racing field. Generic, universal, or matching repeating default metrics across the field are strictly FORBIDDEN. 
+    If current explicit market parameters or win percentages are missing for a runner, you MUST execute a highly granular mathematical estimation based on class tiers, barriers, and form lines to generate distinctly distributed data footprints:
+    1. "hkjcOdds": Must map to a varied, distinct decimal odd string (e.g., "2.45", "6.10", "18.5", "41.0"). Never output matching lines for all horses.
+    2. "winProbability": Must map to an individualized unique integer greater than 0 representing real win equity (e.g., 31, 14, 8, 2). The cumulative sum of the field must approximate 100%.
+    3. "statisticalScore": Must represent an individualized performance power-rating calculation scalar scale from 1 to 100.
+    4. "expertSentiment": Must evaluate selectively to "Bullish", "Bearish", or "Neutral" based on standard performance indicators.
+    5. "oddsValue": Must evaluate dynamically to "Good" if value line analytics back the implied equity, or "Bad" if heavily overpriced or overhyped.
+    6. "keyEdge" & "riskFactor": Provide highly distinct, concise analytical commentary lines mapping their tactical situation.
 
-    CRITICAL: Start your response directly with the opening brace { and end with the closing brace }. Do not include conversational text.
-    
+    CRITICAL FORMAT CONTROL: Start your response directly with the opening brace { and end precisely with the closing brace }. Do not include conversational prefaces, annotations, or code blocks.
+
     You must output strictly a JSON object matching this schema precisely:
     {
       "raceName": "string",
@@ -142,44 +149,42 @@ export default async function handler(req, res) {
       }
     }`;
 
-    const geminiPayload = {
-      contents: [{ parts: [{ text: promptText }] }],
-      systemInstruction: { parts: [{ text: systemInstruction }] },
-      generationConfig: { temperature: 0.2 }
+    const quantPayload = {
+      contents: [{ parts: [{ text: payloadPrompt }] }],
+      systemInstruction: { parts: [{ text: quantSystemInstruction }] },
+      generationConfig: { temperature: 0.15 }
     };
 
-    if (enableLiveWebSearch) {
-      geminiPayload.tools = [{ googleSearch: {} }];
+    // Apply smart-switching for internet crawl tools based on mode selection
+    if (loadLiveCrawlTools) {
+      quantPayload.tools = [{ googleSearch: {} }];
     }
 
-    const geminiResponse = await fetch(geminiUrl, {
+    const quantResponse = await fetch(geminiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(geminiPayload)
+      body: JSON.stringify(quantPayload)
     });
 
-    const geminiData = await geminiResponse.json();
-    if (!geminiResponse.ok) {
-      return res.status(geminiResponse.status).json({ error: geminiData.error?.message || 'Gemini processing failed.' });
-    }
-
-    let responseText = geminiData.candidates[0].content.parts[0].text;
+    const quantData = await quantResponse.json();
     
-    const startIdx = responseText.indexOf('{');
-    const endIdx = responseText.lastIndexOf('}');
-    if (startIdx === -1 || endIdx === -1 || endIdx <= startIdx) {
-      return res.status(422).json({ error: `System alert. Data stream empty or cut off. Search reported: "${responseText}"` });
+    if (!quantResponse.ok) {
+      return res.status(quantResponse.status).json({ error: quantData.error?.message || 'The backend matrix inference engine encountered a server boundary exception.' });
     }
 
-    responseText = responseText.substring(startIdx, endIdx + 1);
-    try {
-      const cleanJson = JSON.parse(responseText);
-      return res.status(200).json(cleanJson);
-    } catch(e) {
-      return res.status(422).json({ error: "The data returned was incomplete. Try executing the query again." });
+    let coreResponseText = quantData.candidates[0].content.parts[0].text;
+    
+    // Defensive Slicing Logic
+    const startMatrixIdx = coreResponseText.indexOf('{');
+    const endMatrixIdx = coreResponseText.lastIndexOf('}');
+    if (startMatrixIdx === -1 || endMatrixIdx === -1 || endMatrixIdx <= startMatrixIdx) {
+      return res.status(422).json({ error: `Data Stream Defect: Server response parsing crashed. Raw log: "${coreResponseText}"` });
     }
+
+    coreResponseText = coreResponseText.substring(startMatrixIdx, endMatrixIdx + 1);
+    return res.status(200).json(JSON.parse(coreResponseText));
 
   } catch (error) {
-    return res.status(500).json({ error: 'Internal Server Error: ' + error.message });
+    return res.status(500).json({ error: 'Fatal System Exception Logged: ' + error.message });
   }
 }
