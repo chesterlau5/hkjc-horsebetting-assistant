@@ -22,7 +22,7 @@
         <div class="flex items-center gap-2">
           <span class="inline-flex items-center gap-1 bg-lime-500/10 text-lime-400 border border-lime-500/20 text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider">
             <span class="h-1.5 w-1.5 rounded-full bg-lime-500"></span>
-            DUAL-MODE ROUTING ENGINE v5.6
+            QUANT MATRIX TERMINAL v6.0
           </span>
         </div>
         <h1 class="text-2xl font-black tracking-tight mt-1 text-white uppercase">
@@ -30,8 +30,8 @@
         </h1>
       </div>
       <div class="text-left sm:text-right font-mono text-[10px] text-zinc-600 space-y-0.5">
-        <p>SYSTEM INFERENCE // GEMINI.FLASH</p>
-        <p>REDUNDANCY TARGET // RATE LIMIT COOLDOWN SHIELD ACTIVE</p>
+        <p>SYSTEM MATRIX // GEMINI.FLASH CORE</p>
+        <p>REDUNDANCY FRAMEWORK // SLIDING BUFFER SAFETY DEPLOYED</p>
       </div>
     </header>
 
@@ -44,34 +44,36 @@
       </button>
     </div>
 
-    <div id="panel-auto" class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 space-y-4">
-      <div class="flex flex-col sm:flex-row items-end gap-3">
-        <div class="flex-1 w-full">
-          <label class="text-[10px] font-black text-zinc-500 uppercase tracking-wider block mb-1.5">Select Targeted Race Date</label>
-          <input type="text" id="input-date" placeholder="e.g., June 7, 2026" 
-                 class="w-full bg-black border border-zinc-900 rounded px-3 py-2 text-xs text-zinc-200 font-mono focus:outline-none focus:border-lime-500/50 transition-all placeholder-zinc-800">
+    <div class="space-y-4">
+      <div id="panel-auto" class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 space-y-4">
+        <div class="flex flex-col sm:flex-row items-end gap-3">
+          <div class="flex-1 w-full">
+            <label class="text-[10px] font-black text-zinc-500 uppercase tracking-wider block mb-1.5">Target Race Meeting Calendar Date</label>
+            <input type="text" id="input-date" placeholder="e.g., June 7, 2026" 
+                   class="w-full bg-black border border-zinc-900 rounded px-3 py-2 text-xs text-zinc-200 font-mono focus:outline-none focus:border-lime-500/50 transition-all placeholder-zinc-800">
+          </div>
+          <button id="btn-load-schedule" class="w-full sm:w-auto bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 font-bold px-4 py-2 rounded text-xs uppercase tracking-wider transition-all">
+            Find Scheduled Races
+          </button>
         </div>
-        <button id="btn-load-schedule" class="w-full sm:w-auto bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 font-bold px-4 py-2 rounded text-xs uppercase tracking-wider transition-all">
-          Find Scheduled Races
-        </button>
+
+        <div id="schedule-container" class="hidden border-t border-zinc-900 pt-3 space-y-2">
+          <span class="text-[9px] font-black text-zinc-600 uppercase tracking-wider block">Race Timeline Matrix Chips (Select Race Card to Analyze):</span>
+          <div id="race-chips" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2"></div>
+        </div>
       </div>
 
-      <div id="schedule-container" class="hidden border-t border-zinc-900 pt-3 space-y-2">
-        <span class="text-[9px] font-black text-zinc-600 uppercase tracking-wider block">Scheduled Race Meetings Grid:</span>
-        <div id="race-chips" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2"></div>
-      </div>
-    </div>
-
-    <div id="panel-manual" class="hidden bg-zinc-950 border border-zinc-900 rounded-lg p-4 space-y-3">
-      <div>
-        <label class="text-[10px] font-black text-zinc-500 uppercase tracking-wider block mb-1.5">Manual Race Card Text Matrix Override</label>
-        <textarea id="input-text" rows="4" placeholder="If calendar timeouts or quota limits block live search -> Paste full HKJC page raw text directly here..." 
-                  class="w-full bg-black border border-zinc-900 rounded-md px-3 py-2 text-xs text-zinc-300 font-mono focus:outline-none focus:border-lime-500/50 transition-all placeholder-zinc-800 resize-none"></textarea>
-      </div>
-      <div class="flex justify-end">
-        <button id="btn-submit-manual" class="w-full sm:w-auto bg-gradient-to-r from-lime-500 to-emerald-500 hover:from-lime-600 hover:to-emerald-600 text-black font-black px-5 py-2.5 rounded text-xs uppercase tracking-wider transition-all active:scale-[0.99]">
-          Run Instant Manual Analytics
-        </button>
+      <div id="panel-manual" class="hidden bg-zinc-950 border border-zinc-900 rounded-lg p-4 space-y-3">
+        <div>
+          <label class="text-[10px] font-black text-zinc-500 uppercase tracking-wider block mb-1.5">Direct Text Payload Matrix Override</label>
+          <textarea id="input-text" rows="4" placeholder="If calendar timeouts or rate ceilings limit automated mode -> Copy and paste the full HKJC race portal webpage raw text block directly here..." 
+                    class="w-full bg-black border border-zinc-900 rounded-md px-3 py-2 text-xs text-zinc-300 font-mono focus:outline-none focus:border-lime-500/50 transition-all placeholder-zinc-800 resize-none"></textarea>
+        </div>
+        <div class="flex justify-end">
+          <button id="btn-submit-manual" class="w-full sm:w-auto bg-gradient-to-r from-lime-500 to-emerald-500 hover:from-lime-600 hover:to-emerald-600 text-black font-black px-5 py-2.5 rounded text-xs uppercase tracking-wider transition-all active:scale-[0.99]">
+            Run Instant Manual Analytics
+          </button>
+        </div>
       </div>
     </div>
 
@@ -80,9 +82,9 @@
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
       </span>
-      <div class="font-mono text-xs text-amber-400">
-        <span class="font-bold uppercase tracking-wider">API RATE LIMIT WALL DETECTED:</span>
-        <span id="cooldown-timer-text">Engine cooling down. Resuming data access in 0.00 seconds...</span>
+      <div class="font-mono text-xs text-amber-400 flex-1">
+        <span class="font-bold uppercase tracking-wider block sm:inline">API COOLDOWN INTERCEPT WALL:</span>
+        <span id="cooldown-timer-text" class="sm:ml-1"></span>
       </div>
     </div>
 
@@ -92,14 +94,14 @@
         <span class="relative inline-flex rounded-full h-3 w-3 bg-lime-500"></span>
       </span>
       <div>
-        <span class="block text-[9px] font-mono font-black text-lime-400 uppercase tracking-widest">ACTIVE PLAY TARGET LOCKED</span>
-        <p id="target-lock-text" class="text-sm font-black text-white tracking-tight uppercase mt-0.5">NO TARGET</p>
+        <span class="block text-[9px] font-mono font-black text-lime-400 uppercase tracking-widest">ACTIVE TERMINAL TARGET LOCKED</span>
+        <p id="target-lock-text" class="text-sm font-black text-white tracking-tight uppercase mt-0.5">UNRESOLVED CONFIG</p>
       </div>
     </div>
 
     <div id="loading" class="hidden text-center py-12 bg-zinc-950 border border-zinc-900 rounded-lg">
       <div class="inline-block animate-spin rounded-full h-6 w-6 border-2 border-t-lime-400 border-zinc-900 mb-2"></div>
-      <p id="loading-text" class="text-[10px] font-mono tracking-widest text-zinc-500 uppercase">Processing system queries...</p>
+      <p id="loading-text" class="text-[10px] font-mono tracking-widest text-zinc-500 uppercase">SYNCHRONIZING SECURE TELEMETRY BUFFERS...</p>
     </div>
 
     <div id="error-box" class="hidden bg-red-950/30 border border-red-900 text-red-400 p-4 rounded-lg font-mono text-xs"></div>
@@ -108,22 +110,22 @@
       
       <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 id="res-title" class="text-lg font-black text-white tracking-tight uppercase">Race Matrix</h2>
+          <h2 id="res-title" class="text-lg font-black text-white tracking-tight uppercase">Race Matrix Summary</h2>
           <p id="res-date" class="text-[10px] font-mono text-zinc-500 mt-0.5 tracking-wider">TIMESTAMP</p>
         </div>
         <div class="bg-black border border-zinc-900 px-3 py-1.5 rounded flex flex-col">
-          <span class="text-[8px] uppercase font-black text-zinc-650 tracking-wider">TRACK STATUS</span>
-          <span id="res-track" class="text-xs font-black text-lime-400">GOOD</span>
+          <span class="text-[8px] uppercase font-black text-zinc-650 tracking-wider">TRACK CONDITION</span>
+          <span id="res-track" class="text-xs font-black text-lime-400">UNKNOWN</span>
         </div>
       </div>
 
       <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4">
-        <span class="text-[9px] font-black uppercase tracking-wider text-zinc-500 block mb-1.5">Pace Bias Matrix Analysis</span>
+        <span class="text-[9px] font-black uppercase tracking-wider text-zinc-500 block mb-1.5">Macro Strategic Analysis</span>
         <p id="res-summary" class="text-zinc-400 text-xs leading-relaxed font-medium"></p>
       </div>
 
       <div>
-        <span class="text-[9px] font-black uppercase tracking-wider text-zinc-500 block mb-2.5">Targeted Play Classifications</span>
+        <span class="text-[9px] font-black uppercase tracking-wider text-zinc-500 block mb-2.5">Target Play Classifications</span>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
           
           <div class="bg-zinc-950 border border-zinc-900 rounded-lg p-4 flex flex-col justify-between border-t-2 border-t-lime-500">
@@ -170,8 +172,8 @@
 
       <div class="bg-zinc-950 border border-zinc-900 rounded-lg overflow-hidden">
         <div class="px-4 py-3 border-b border-zinc-900 bg-black flex justify-between items-center">
-          <h3 class="text-xs font-black text-zinc-400 uppercase tracking-wider">Advanced Data-Line Matrix</h3>
-          <span class="font-mono text-[9px] text-zinc-600">SORTED BY IMPLIED WIN PROBABILITY DESC</span>
+          <h3 class="text-xs font-black text-zinc-400 uppercase tracking-wider">Advanced Data-Line Spreadsheet Matrix</h3>
+          <span class="font-mono text-[9px] text-zinc-600">ORDER: IMPLIED WIN PROBABILITY DESC</span>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse whitespace-nowrap">
@@ -207,11 +209,13 @@
   </div>
 
   <script>
+    // Tab Interface Selectors
     const tabAuto = document.getElementById('tab-auto');
     const tabManual = document.getElementById('tab-manual');
     const panelAuto = document.getElementById('panel-auto');
     const panelManual = document.getElementById('panel-manual');
 
+    // Interactive Trigger Targets
     const btnLoadSchedule = document.getElementById('btn-load-schedule');
     const btnSubmitManual = document.getElementById('btn-submit-manual');
     const scheduleContainer = document.getElementById('schedule-container');
@@ -225,8 +229,9 @@
     const cooldownAlert = document.getElementById('cooldown-alert');
     const cooldownTimerText = document.getElementById('cooldown-timer-text');
 
-    let cooldownInterval = null;
+    let lockClockInterval = null;
 
+    // Interactive Tab Configuration Routing
     tabAuto.addEventListener('click', () => {
       tabAuto.className = "px-4 py-2 text-xs font-black uppercase tracking-wider border-b-2 border-lime-500 text-lime-400 bg-zinc-950/40 rounded-t transition-all";
       tabManual.className = "px-4 py-2 text-xs font-black uppercase tracking-wider border-b-2 border-transparent text-zinc-500 hover:text-zinc-300 transition-all";
@@ -241,324 +246,329 @@
       panelAuto.classList.add('hidden');
     });
 
+    // MATHEMATICALLY PRECISE DECI -> AMERICAN VEGAS LINE CONVERTER (+300, -110)
     function cleanAndConvertOdds(decimalStr) {
       if (!decimalStr) return '+100';
-      let clean = decimalStr.toString().replace(/[^0-9.]/g, '');
-      let d = parseFloat(clean);
-      if (isNaN(d) || d <= 1.0) return '+100';
-      if (d >= 2.0) {
-        return `+${Math.round((d - 1) * 100)}`;
+      let clearVal = decimalStr.toString().replace(/[^0-9.]/g, '');
+      let oddsNum = parseFloat(clearVal);
+      if (isNaN(oddsNum) || oddsNum <= 1.0) return '+100';
+      
+      if (oddsNum >= 2.0) {
+        return `+${Math.round((oddsNum - 1) * 100)}`;
       } else {
-        return `${Math.round(-100 / (d - 1))}`;
+        return `${Math.round(-100 / (oddsNum - 1))}`;
       }
     }
 
-    // INTELLIGENT FRONTEND COOLDOWN CLOCK SHIELD
-    function handleSystemErrors(errorMessage) {
+    // DEFENSIVE FAULT HANDLING ENGINE WITH SLIDING SAFETY BUFFERS
+    function parseAndLockTerminal(errorMsg) {
       errorBox.classList.add('hidden');
       
-      // Parse quota/rate limits and read exact retry times
-      if (errorMessage.includes("quota") || errorMessage.includes("Quota exceeded") || errorMessage.includes("limit")) {
-        let match = errorMessage.match(/retry in ([\d.]+)s/i);
-        let secondsToWait = match ? Math.ceil(parseFloat(match[1])) : 24;
+      if (errorMsg.includes("quota") || errorMsg.includes("Quota") || errorMsg.includes("limit") || errorMsg.includes("429")) {
+        let regexSecondsMatch = errorMsg.match(/retry in ([\d.]+)s/i);
+        // Force a 15-second safety block so multiple sliding positions open up at once
+        let calculatedLockDuration = regexSecondsMatch ? Math.ceil(parseFloat(regexSecondsMatch[1])) + 15 : 45;
         
-        triggerTerminalLockdown(secondsToWait);
+        engageTerminalLockdown(calculatedLockDuration);
       } else {
-        errorBox.textContent = `TARGET PROCESSING FAULT: ${errorMessage}`;
+        errorBox.textContent = `DIAGNOSTIC FAULT LOGGED: ${errorMsg}`;
         errorBox.classList.remove('hidden');
       }
     }
 
-    function triggerTerminalLockdown(durationSeconds) {
-      clearInterval(cooldownInterval);
+    function engageTerminalLockdown(secondsDuration) {
+      clearInterval(lockClockInterval);
       cooldownAlert.classList.remove('hidden');
       
-      // Lock actions
       btnLoadSchedule.disabled = true;
       btnSubmitManual.disabled = true;
-      Array.from(raceChips.getElementsByTagName('button')).forEach(b => b.disabled = true);
+      Array.from(raceChips.getElementsByTagName('button')).forEach(chip => chip.disabled = true);
 
-      let timeLeft = durationSeconds;
-      cooldownTimerText.textContent = `Engine free-tier quota saturated. Safe system unlock automated in ${timeLeft} seconds...`;
+      let counterLeft = secondsDuration;
+      cooldownTimerText.innerHTML = `Engine rate limits saturated. Safe terminal release in <span class="text-white font-black font-mono">${counterLeft}s</span>. <span class="text-[10px] text-zinc-500 block sm:inline sm:ml-1">Allowing token windows to slide clear before releasing input blocks.</span>`;
 
-      cooldownInterval = setInterval(() => {
-        timeLeft--;
-        if (timeLeft <= 0) {
-          clearInterval(cooldownInterval);
+      lockClockInterval = setInterval(() => {
+        counterLeft--;
+        if (counterLeft <= 0) {
+          clearInterval(lockClockInterval);
           cooldownAlert.classList.add('hidden');
           btnLoadSchedule.disabled = false;
           btnSubmitManual.disabled = false;
-          Array.from(raceChips.getElementsByTagName('button')).forEach(b => b.disabled = false);
+          Array.from(raceChips.getElementsByTagName('button')).forEach(chip => chip.disabled = false);
         } else {
-          cooldownTimerText.textContent = `Engine free-tier quota saturated. Safe system unlock automated in ${timeLeft} seconds...`;
+          cooldownTimerText.innerHTML = `Engine rate limits saturated. Safe terminal release in <span class="text-white font-black font-mono">${counterLeft}s</span>. <span class="text-[10px] text-zinc-500 block sm:inline sm:ml-1">Allowing token windows to slide clear before releasing input blocks.</span>`;
         }
       }, 1000);
     }
 
-    // MODE 1: AUTOMATED LIVE SEARCH CALENDAR ACTIONS
+    // WORKSPACE TRACK INTERACTION 1: AUTO SCHEDULE PARSING RUNS
     btnLoadSchedule.addEventListener('click', async () => {
       errorBox.classList.add('hidden');
       scheduleContainer.classList.add('hidden');
       results.classList.add('hidden');
       targetLockPanel.classList.add('hidden');
       
-      const dateVal = document.getElementById('input-date').value.trim();
-      if (!dateVal) return alert('Provide a target date to query schedules (e.g., June 7, 2026).');
+      const targetedDateValue = document.getElementById('input-date').value.trim();
+      if (!targetedDateValue) return alert('Input entry error. Specify target racing date parameter first.');
 
-      loadingText.textContent = `CRUNCHING LIVE CALENDAR DATA FOR ${dateVal.toUpperCase()}...`;
+      loadingText.textContent = `EXTRACTING LIVE CALENDAR MATRICES FOR ${targetedDateValue.toUpperCase()}...`;
       loading.classList.remove('hidden');
 
       try {
-        const response = await fetch('/api/analyze', {
+        const networkResponse = await fetch('/api/analyze', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'fetch_races', date: dateVal })
+          body: JSON.stringify({ action: 'fetch_races', date: targetedDateValue })
         });
 
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'Failed to sync schedule metadata metrics.');
+        const dataPayload = await networkResponse.json();
+        if (!networkResponse.ok) throw new Error(dataPayload.error || 'The system was unable to pull race card markers.');
 
-        buildRaceButtons(dateVal, data.races || []);
+        generateRaceMeetingChips(targetedDateValue, dataPayload.races || []);
       } catch (err) {
-        handleSystemErrors(err.message);
-      } finally {
+        parseAndLockTerminal(err.message);
+      } finaly {
         loading.classList.add('hidden');
       }
     });
 
-    function buildRaceButtons(dateStr, racesList) {
+    function generateRaceMeetingChips(dateAnchorString, raceScheduleArray) {
       raceChips.innerHTML = '';
-      if(racesList.length === 0) {
-        raceChips.innerHTML = `<span class="text-xs text-zinc-650 font-mono col-span-full">No official card schedule entries verified on this day.</span>`;
+      if(raceScheduleArray.length === 0) {
+        raceChips.innerHTML = `<span class="text-xs text-zinc-600 font-mono col-span-full">No official hkjc schedule logs confirmed on this date.</span>`;
       } else {
-        racesList.forEach(race => {
-          const btn = document.createElement('button');
-          btn.className = "bg-black border border-zinc-900 hover:border-lime-500 text-left p-2.5 rounded transition-all flex flex-col justify-between group disabled:opacity-40 disabled:hover:border-zinc-900";
+        raceScheduleArray.forEach(raceEntry => {
+          const chipButton = document.createElement('button');
+          chipButton.className = "bg-black border border-zinc-900 hover:border-lime-500 text-left p-2.5 rounded transition-all flex flex-col justify-between group disabled:opacity-30 disabled:hover:border-zinc-900";
           
-          btn.innerHTML = `
-            <span class="mono text-[9px] font-bold text-lime-400/80 group-hover:text-lime-400 uppercase tracking-tight">${race.time || race.Time || 'TBD'}</span>
-            <span class="font-black text-xs text-zinc-300 group-hover:text-white uppercase mt-0.5">${race.name || race.Name || 'Race'}</span>
+          const timeLabel = raceEntry.time || raceEntry.Time || 'TBD';
+          const raceLabel = raceEntry.name || raceEntry.Name || 'Race';
+
+          chipButton.innerHTML = `
+            <span class="mono text-[9px] font-bold text-lime-400/80 group-hover:text-lime-400 uppercase tracking-tight">${timeLabel}</span>
+            <span class="font-black text-xs text-zinc-300 group-hover:text-white uppercase mt-0.5">${raceLabel}</span>
           `;
           
-          btn.addEventListener('click', () => {
-            const timeLabel = race.time || race.Time || 'TBD';
-            const nameLabel = race.name || race.Name || 'Race';
-            
-            targetLockText.textContent = `${dateStr.toUpperCase()} @ ${timeLabel.toUpperCase()} — ${nameLabel.toUpperCase()}`;
+          chipButton.addEventListener('click', () => {
+            targetLockText.textContent = `${dateAnchorString.toUpperCase()} @ ${timeLabel.toUpperCase()} — ${raceLabel.toUpperCase()}`;
             targetLockPanel.classList.remove('hidden');
-            
-            executeAutomatedRaceAnalysis(dateStr, nameLabel, timeLabel);
+            executeTargetedAutoAnalysis(dateAnchorString, raceLabel, timeLabel);
           });
-          raceChips.appendChild(btn);
+          raceChips.appendChild(chipButton);
         });
       }
       scheduleContainer.classList.remove('hidden');
     }
 
-    async function executeAutomatedRaceAnalysis(dateStr, raceName, raceTime) {
+    async function executeTargetedAutoAnalysis(dateString, raceTitleId, raceTimeMarker) {
       errorBox.classList.add('hidden');
       results.classList.add('hidden');
       
-      loadingText.textContent = `LAUNCHING GROUNDED INTERNET CRAWL FOR ${raceName.toUpperCase()}...`;
+      loadingText.textContent = `LAUNCHING LIVE WEB SCRAPE FOR ${raceTitleId.toUpperCase()} DATA LINES...`;
       loading.classList.remove('hidden');
 
       try {
-        const response = await fetch('/api/analyze', {
+        const netResponse = await fetch('/api/analyze', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'analyze_race', date: dateStr, race: raceName })
+          body: JSON.stringify({ action: 'analyze_race', date: dateString, race: raceTitleId })
         });
 
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'The backend failed to isolate the targeted race parameters.');
+        const analyticalResult = await netResponse.json();
+        if (!netResponse.ok) throw new Error(analyticalResult.error || 'Server processing error executing deep context extraction.');
 
-        renderAdvancedSportsbookLayout(data, dateStr, raceName, raceTime);
+        renderAdvancedSportsbookLayout(analyticalResult, dateString, raceTitleId, raceTimeMarker);
       } catch (err) {
-        handleSystemErrors(err.message);
-      } finally {
+        parseAndLockTerminal(err.message);
+      } finaly {
         loading.classList.add('hidden');
       }
     }
 
-    // MODE 2: MANUAL OVERDRIVE RECOVERY ACTION (ZERO-TIMEOUT BACKUP VALVE)
+    // WORKSPACE TRACK INTERACTION 2: MANUAL OVERDRIVE RECOVERY INFERENCE RUNS
     btnSubmitManual.addEventListener('click', async () => {
       errorBox.classList.add('hidden');
       results.classList.add('hidden');
       targetLockPanel.classList.add('hidden');
 
-      const textValue = document.getElementById('input-text').value.trim();
-      if (!textValue) return alert('Paste valid HKJC raw context data first before running override analytics.');
+      const textDumpPayload = document.getElementById('input-text').value.trim();
+      if (!textDumpPayload) return alert('Input context error. Paste portal text dump into terminal block first.');
 
-      loadingText.textContent = "EXTRACTING QUANT LINES FROM TEXT BLOCKS (TURBO INSTANT MODE)...";
+      loadingText.textContent = "DE-SERIALIZING RAW LOCAL TEXT PAYLOADS (TURBO CONTEXT)...";
       loading.classList.remove('hidden');
 
       try {
-        const response = await fetch('/api/analyze', {
+        const networkResponse = await fetch('/api/analyze', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ rawText: textValue })
+          body: JSON.stringify({ rawText: textDumpPayload })
         });
 
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'The manual layout engine was unable to break context.');
+        const payloadData = await networkResponse.json();
+        if (!networkResponse.ok) throw new Error(payloadData.error || 'Context architecture translation processing error.');
 
-        targetLockText.textContent = `MANUAL TEXT DUMP IMPORTED — ${data.raceName || 'INJECTED RACE'}`;
+        const inferredRaceName = payloadData.raceName || "INJECTED PLAY";
+        targetLockText.textContent = `MANUAL CONTEXT IMPORTED — FIELD ANALYSIS: ${inferredRaceName.toUpperCase()}`;
         targetLockPanel.classList.remove('hidden');
 
-        renderAdvancedSportsbookLayout(data, "PASTED DATA", data.raceName || "Race", "CURRENT");
+        renderAdvancedSportsbookLayout(payloadData, "PASTED DATA CONTEXT", inferredRaceName, "CURRENT");
       } catch (err) {
-        handleSystemErrors(err.message);
-      } finally {
+        parseAndLockTerminal(err.message);
+      } finaly {
         loading.classList.add('hidden');
       }
     });
 
+    // UNIFIED FRONTEND DATA RENDERING MATRIX WITH DEFENSIVE PROPERTY ALIAS RECOVERY
     function renderAdvancedSportsbookLayout(data, selectedDate, selectedRace, selectedTime) {
-      const coreAnalysis = data.analysis || data;
-      const rawRunners = coreAnalysis.runners || data.runners || [];
-      const rawStable = coreAnalysis.top5Guaranteed || data.top5Guaranteed || [];
-      const rawUpsets = coreAnalysis.top5Upsets || data.top5Upsets || [];
+      const coreDataBlock = data.analysis || data;
+      const rawRunnersField = coreDataBlock.runners || data.runners || [];
+      const rawStableArray = coreDataBlock.top5Guaranteed || data.top5Guaranteed || [];
+      const rawUpsetsArray = coreDataBlock.top5Upsets || data.top5Upsets || [];
       
       document.getElementById('res-title').textContent = data.raceName || selectedRace;
-      document.getElementById('res-date').textContent = `${selectedDate.toUpperCase()} // TIME STATUS: ${selectedTime.toUpperCase()}`;
-      document.getElementById('res-track').textContent = data.trackCondition || coreAnalysis.trackCondition || 'Good / Firm';
-      document.getElementById('res-summary').textContent = coreAnalysis.summary || "Analysis matrix calculated.";
+      document.getElementById('res-date').textContent = `${selectedDate.toUpperCase()} // DATELINE TIMING STRIP: ${selectedTime.toUpperCase()}`;
+      document.getElementById('res-track').textContent = data.trackCondition || coreDataBlock.trackCondition || 'Good / Firm';
+      document.getElementById('res-summary').textContent = coreDataBlock.summary || "Performance vectors extracted successfully.";
 
-      document.getElementById('exotic-quinella').textContent = coreAnalysis.exoticBetSuggestions?.quinella || 'Data parsing complete.';
-      document.getElementById('exotic-tierce').textContent = coreAnalysis.exoticBetSuggestions?.tierce || 'Data parsing complete.';
+      document.getElementById('exotic-quinella').textContent = coreDataBlock.exoticBetSuggestions?.quinella || 'Calculation engine verified.';
+      document.getElementById('exotic-tierce').textContent = coreDataBlock.exoticBetSuggestions?.tierce || 'Calculation engine verified.';
 
-      const runners = rawRunners.map(item => {
+      // Defensive Property Adapter Layout Array Mapping
+      const processedRunners = rawRunnersField.map(horseVector => {
         return {
-          horseNumber: item.horseNumber ?? item.number ?? item.no ?? item.gate ?? '?',
-          horseName: item.horseName ?? item.name ?? item.title ?? 'Unknown',
-          keyEdge: item.keyEdge ?? item.edge ?? item.advantage ?? 'None',
-          riskFactor: item.riskFactor ?? item.risk ?? 'None',
-          hkjcOdds: item.hkjcOdds ?? item.odds ?? item.decimalOdds ?? '2.0',
-          vegasOdds: item.vegasOdds ?? item.line ?? '',
-          winProbability: item.winProbability ?? item.probability ?? item.prob ?? item.winProb ?? 0,
-          statisticalScore: item.statisticalScore ?? item.score ?? item.rating ?? 50,
-          expertSentiment: item.expertSentiment ?? item.sentiment ?? 'Neutral',
-          oddsValue: item.oddsValue ?? item.value ?? 'Good'
+          horseNumber: horseVector.horseNumber ?? horseVector.number ?? horseVector.no ?? horseVector.gate ?? '?',
+          horseName: horseVector.horseName ?? horseVector.name ?? horseVector.title ?? 'Unknown Runner',
+          keyEdge: horseVector.keyEdge ?? horseVector.edge ?? horseVector.advantage ?? 'No significant tactical leverage detected.',
+          riskFactor: horseVector.riskFactor ?? horseVector.risk ?? 'Unmapped profile.',
+          hkjcOdds: horseVector.hkjcOdds ?? horseVector.odds ?? horseVector.decimalOdds ?? '2.0',
+          winProbability: horseVector.winProbability ?? horseVector.probability ?? horseVector.prob ?? horseVector.winProb ?? 0,
+          statisticalScore: horseVector.statisticalScore ?? horseVector.score ?? horseVector.rating ?? 50,
+          expertSentiment: horseVector.expertSentiment ?? horseVector.sentiment ?? 'Neutral',
+          oddsValue: horseVector.oddsValue ?? horseVector.value ?? 'Good'
         };
       });
 
-      runners.sort((a, b) => b.winProbability - a.winProbability);
+      // Sort descendants based on win probability
+      processedRunners.sort((first, second) => second.winProbability - first.winProbability);
 
-      // --- TIER 1: ABSOLUTE SAFEST COVERS ---
+      // --- POPULATE TIER 1: ABSOLUTE SAFEST SELECTION ARRAYS ---
       const safestContainer = document.getElementById('safest-container');
       safestContainer.innerHTML = '';
-      const topSafetyRunners = [...runners].slice(0, 3);
+      const highProbabilityPicks = [...processedRunners].slice(0, 3);
       
-      if (topSafetyRunners.length === 0) {
-        safestContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">Insufficient data.</p>`;
+      if (highProbabilityPicks.length === 0) {
+        safestContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-700 py-1">Dataset processing empty.</p>`;
       } else {
-        topSafetyRunners.forEach(horse => {
-          const div = document.createElement('div');
-          div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
-          const placeSafetyFactor = Math.min(98, Math.round(horse.winProbability * 2.1));
-          div.innerHTML = `
+        highProbabilityPicks.forEach(horse => {
+          const blockElement = document.createElement('div');
+          blockElement.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 hover:border-zinc-800 transition-all";
+          // Run calculations to estimate place safety factors
+          const placementSafetyScalar = Math.min(98, Math.round(horse.winProbability * 2.1));
+          
+          blockElement.innerHTML = `
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-1.5">
                 <span class="mono text-[9px] font-black bg-lime-500/10 text-lime-400 border border-lime-500/20 px-1 py-0.5 rounded">#${horse.horseNumber}</span>
                 <span class="font-extrabold text-xs text-zinc-150">${horse.horseName}</span>
               </div>
-              <span class="mono text-[10px] text-lime-400 font-black">${placeSafetyFactor}% Place Cover</span>
+              <span class="mono text-[10px] text-lime-400 font-black">${placementSafetyScalar}% Place Cover</span>
             </div>
-            <div class="text-[10px] text-zinc-400"><span class="text-lime-500 font-bold">MARKET LINE:</span> ${cleanAndConvertOdds(horse.hkjcOdds)} Place Line</div>
-            <p class="text-[9px] text-zinc-600 leading-tight">Safety fallback protecting podium placement chains.</p>
+            <div class="text-[10px] text-zinc-400"><span class="text-lime-500 font-bold">MARKET PLAY:</span> Place / Show Bet (${cleanAndConvertOdds(horse.hkjcOdds)} Line Backup)</div>
+            <p class="text-[9px] text-zinc-600 leading-tight">Calculated variance downshift converting standard win metrics to preserve bankroll capital.</p>
           `;
-          safestContainer.appendChild(div);
+          safestContainer.appendChild(blockElement);
         });
       }
 
-      // --- TIER 2: HIGH-STABILITY REVENUE ---
+      // --- POPULATE TIER 2: HIGH-STABILITY REVENUE PLAYS ---
       const guaranteedContainer = document.getElementById('guaranteed-container');
       guaranteedContainer.innerHTML = '';
       
-      if (rawStable.length === 0) {
-        guaranteedContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No locks detected.</p>`;
+      if (rawStableArray.length === 0) {
+        guaranteedContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-700 py-1">No definitive consensus locks found.</p>`;
       } else {
-        rawStable.slice(0, 3).forEach(play => {
-          const hNumber = play.horseNumber ?? play.number ?? play.no ?? '?';
-          const hName = play.horseName ?? play.name ?? 'Unknown';
-          const linkedHorse = runners.find(h => h.horseNumber == hNumber);
-          const computedVegasOdds = linkedHorse ? cleanAndConvertOdds(linkedHorse.hkjcOdds) : cleanAndConvertOdds(play.vegasOdds || play.odds || play.line);
+        rawStableArray.slice(0, 3).forEach(stablePlay => {
+          const horseNumIdx = stablePlay.horseNumber ?? stablePlay.number ?? stablePlay.no ?? '?';
+          const horseNameIdx = stablePlay.horseName ?? stablePlay.name ?? 'Unknown';
+          const correspondingHorse = processedRunners.find(h => h.horseNumber == horseNumIdx);
+          const computedOddsString = correspondingHorse ? cleanAndConvertOdds(correspondingHorse.hkjcOdds) : cleanAndConvertOdds(stablePlay.vegasOdds || stablePlay.odds);
 
-          const div = document.createElement('div');
-          div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
-          div.innerHTML = `
+          const blockElement = document.createElement('div');
+          blockElement.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 hover:border-zinc-800 transition-all";
+          blockElement.innerHTML = `
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-1.5">
-                <span class="mono text-[9px] font-black bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1 py-0.5 rounded">#${hNumber}</span>
-                <span class="font-extrabold text-xs text-zinc-150">${hName}</span>
+                <span class="mono text-[9px] font-black bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1 py-0.5 rounded">#${horseNumIdx}</span>
+                <span class="font-extrabold text-xs text-zinc-150">${horseNameIdx}</span>
               </div>
-              <span class="mono text-[10px] text-emerald-400 font-bold">${computedVegasOdds}</span>
+              <span class="mono text-[10px] text-emerald-400 font-bold">${computedOddsString}</span>
             </div>
-            <div class="text-[10px] text-zinc-400"><span class="text-emerald-500 font-bold">MARKET PLAY:</span> ${play.recommendedBet || play.bet || 'Win'}</div>
-            <p class="text-[9px] text-zinc-600 leading-tight truncate">${play.executionStrategy || play.strategy || ''}</p>
+            <div class="text-[10px] text-zinc-400"><span class="text-emerald-500 font-bold">MARKET PLAY:</span> ${stablePlay.recommendedBet || stablePlay.bet || 'Straight Win'}</div>
+            <p class="text-[9px] text-zinc-600 leading-tight truncate">${stablePlay.executionStrategy || stablePlay.strategy || ''}</p>
           `;
-          guaranteedContainer.appendChild(div);
+          guaranteedContainer.appendChild(blockElement);
         });
       }
 
-      // --- TIER 3: HIGH-MULTIPLIER UPSETS ---
+      // --- POPULATE TIER 3: HIGH-MULTIPLIER SPECULATIVE UPSETS ---
       const upsetsContainer = document.getElementById('upsets-container');
       upsetsContainer.innerHTML = '';
       
-      if (rawUpsets.length === 0) {
-        upsetsContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-650 py-1">No inefficiencies computed.</p>`;
+      if (rawUpsetsArray.length === 0) {
+        upsetsContainer.innerHTML = `<p class="text-[11px] font-mono text-zinc-700 py-1">No high-payout systemic inefficiencies detected.</p>`;
       } else {
-        rawUpsets.slice(0, 3).forEach(play => {
-          const hNumber = play.horseNumber ?? play.number ?? play.no ?? '?';
-          const hName = play.horseName ?? play.name ?? 'Unknown';
-          const linkedHorse = runners.find(h => h.horseNumber == hNumber);
-          const computedVegasOdds = linkedHorse ? cleanAndConvertOdds(linkedHorse.hkjcOdds) : cleanAndConvertOdds(play.vegasOdds || play.odds || play.line);
+        rawUpsetsArray.slice(0, 3).forEach(upsetPlay => {
+          const horseNumIdx = upsetPlay.horseNumber ?? upsetPlay.number ?? upsetPlay.no ?? '?';
+          const horseNameIdx = upsetPlay.horseName ?? upsetPlay.name ?? 'Unknown';
+          const correspondingHorse = processedRunners.find(h => h.horseNumber == horseNumIdx);
+          const computedOddsString = correspondingHorse ? cleanAndConvertOdds(correspondingHorse.hkjcOdds) : cleanAndConvertOdds(upsetPlay.vegasOdds || upsetPlay.odds);
 
-          const div = document.createElement('div');
-          div.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 transition-all hover:border-zinc-800";
-          div.innerHTML = `
+          const blockElement = document.createElement('div');
+          blockElement.className = "bg-black border border-zinc-900 rounded p-2.5 flex flex-col justify-between gap-1 hover:border-zinc-800 transition-all";
+          blockElement.innerHTML = `
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-1.5">
-                <span class="mono text-[9px] font-black bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-1 py-0.5 rounded">#${hNumber}</span>
-                <span class="font-extrabold text-xs text-zinc-150">${hName}</span>
+                <span class="mono text-[9px] font-black bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-1 py-0.5 rounded">#${horseNumIdx}</span>
+                <span class="font-extrabold text-xs text-zinc-150">${horseNameIdx}</span>
               </div>
-              <span class="mono text-[10px] text-amber-400 font-black">${computedVegasOdds}</span>
+              <span class="mono text-[10px] text-amber-400 font-black">${computedOddsString}</span>
             </div>
-            <div class="text-[10px] text-zinc-400"><span class="text-indigo-400 font-bold">MARKET PLAY:</span> ${play.recommendedBet || play.bet || 'Longshot'}</div>
-            <p class="text-[9px] text-zinc-600 leading-tight truncate">${play.upsetTrigger || play.trigger || ''}</p>
+            <div class="text-[10px] text-zinc-400"><span class="text-indigo-400 font-bold">MARKET PLAY:</span> ${upsetPlay.recommendedBet || upsetPlay.bet || 'Longshot Win'}</div>
+            <p class="text-[9px] text-zinc-600 leading-tight truncate">${upsetPlay.upsetTrigger || upsetPlay.trigger || ''}</p>
           `;
-          upsetsContainer.appendChild(div);
+          upsetsContainer.appendChild(blockElement);
         });
       }
 
-      // --- POPULATE MAIN PERFORMANCE DATASHEET ---
-      const tbody = document.getElementById('runners-rows');
-      tbody.innerHTML = '';
+      // --- POPULATE SPREADSHEET MATRIX BODY ROWS ---
+      const tableBody = document.getElementById('runners-rows');
+      tableBody.innerHTML = '';
       
-      runners.forEach(horse => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-zinc-950 transition-colors group";
+      processedRunners.forEach(horse => {
+        const rowElement = document.createElement('tr');
+        rowElement.className = "hover:bg-zinc-950/60 transition-colors group";
 
-        let sentimentClass = "bg-zinc-900 text-zinc-600";
-        if (horse.expertSentiment === 'Bullish') sentimentClass = "bg-lime-500/10 text-lime-400 border border-lime-500/20";
-        if (horse.expertSentiment === 'Bearish') sentimentClass = "bg-red-500/10 text-red-400 border border-red-500/20";
+        let badgeStyleClasses = "bg-zinc-900 text-zinc-500 border-zinc-800";
+        if (horse.expertSentiment === 'Bullish') badgeStyleClasses = "bg-lime-500/10 text-lime-400 border-lime-500/20";
+        if (horse.expertSentiment === 'Bearish') badgeStyleClasses = "bg-red-500/10 text-red-400 border-red-500/20";
 
-        let visualChartHtml = '';
+        let visualizationMeterHtml = '';
         if (horse.oddsValue === 'Good' || horse.oddsValue === 'good') {
-          visualChartHtml = `
+          visualizationMeterHtml = `
             <div class="flex flex-col items-center justify-center space-y-0.5">
               <div class="flex space-x-0.5 items-center justify-center">
                 <span class="h-1 w-2 rounded-sm bg-zinc-900"></span>
-                <span class="h-1.5 w-3 rounded-sm bg-lime-500 shadow-sm shadow-lime-500/20"></span>
+                <span class="h-1.5 w-3 rounded-sm bg-lime-500 shadow-sm shadow-lime-500/30"></span>
               </div>
               <span class="text-[8px] mono font-bold text-lime-400 tracking-wider">VALUE LINE</span>
             </div>
           `;
         } else {
-          visualChartHtml = `
+          visualizationMeterHtml = `
             <div class="flex flex-col items-center justify-center space-y-0.5">
               <div class="flex space-x-0.5 items-center justify-center">
-                <span class="h-1.5 w-3 rounded-sm bg-red-500/80"></span>
+                <span class="h-1.5 w-3 rounded-sm bg-red-500/80 shadow-sm shadow-red-900/30"></span>
                 <span class="h-1 w-2 rounded-sm bg-zinc-900"></span>
               </div>
               <span class="text-[8px] mono font-bold text-red-500/80 tracking-wider">OVERPRICED</span>
@@ -566,31 +576,33 @@
           `;
         }
 
-        tr.innerHTML = `
-          <td class="py-2.5 px-4 text-center mono font-black text-xs text-zinc-600 bg-black/60">${horse.horseNumber}</td>
+        trProbabilityInt = parseInt(horse.winProbability) || 0;
+
+        rowElement.innerHTML = `
+          <td class="py-2.5 px-4 text-center mono font-black text-xs text-zinc-600 bg-black/40">${horse.horseNumber}</td>
           <td class="py-2.5 px-4">
             <div class="font-black text-xs text-zinc-200 group-hover:text-lime-400 transition-colors">${horse.horseName}</div>
             <div class="text-[9px] text-zinc-500 max-w-xs truncate"><span class="text-zinc-400 font-bold">Edge:</span> ${horse.keyEdge}</div>
           </td>
-          <td class="py-2.5 px-4 text-center mono text-xs font-black text-white bg-zinc-950/20">${cleanAndConvertOdds(horse.hkjcOdds)}</td>
+          <td class="py-2.5 px-4 text-center mono text-xs font-black text-white bg-zinc-950/40">${cleanAndConvertOdds(horse.hkjcOdds)}</td>
           <td class="py-2.5 px-4 text-center mono text-xs font-bold text-zinc-500">${horse.hkjcOdds}</td>
-          <td class="py-2.5 px-4 text-center">${visualChartHtml}</td>
+          <td class="py-2.5 px-4 text-center">${visualizationMeterHtml}</td>
           <td class="py-2.5 px-4">
             <div class="flex items-center space-x-2">
-              <span class="text-xs mono font-black text-zinc-100 w-8">${horse.winProbability}%</span>
+              <span class="text-xs mono font-black text-zinc-100 w-8">${trProbabilityInt}%</span>
               <div class="w-16 bg-zinc-900 h-1 rounded overflow-hidden hidden sm:block">
-                <div class="bg-gradient-to-r from-lime-500 to-emerald-400 h-1 rounded" style="width: ${horse.winProbability}%"></div>
+                <div class="bg-gradient-to-r from-lime-500 to-emerald-400 h-1 rounded" style="width: ${trProbabilityInt}%"></div>
               </div>
             </div>
           </td>
           <td class="py-2.5 px-4 text-center mono font-extrabold text-xs text-zinc-300">${horse.statisticalScore}</td>
           <td class="py-2.5 px-4 text-center">
-            <span class="px-1.5 py-0.5 rounded border text-[8px] font-black uppercase tracking-wider ${sentimentClass}">
+            <span class="px-1.5 py-0.5 rounded border text-[8px] font-black uppercase tracking-wider ${badgeStyleClasses}">
               ${horse.expertSentiment}
             </span>
           </td>
         `;
-        tbody.appendChild(tr);
+        tableBody.appendChild(rowElement);
       });
 
       results.classList.remove('hidden');
